@@ -214,6 +214,17 @@ class PreferencesController {
     return Promise.resolve(tokens)
   }
 
+  scheduleExploreTokens () {
+    if (this.conversionInterval) {
+      clearInterval(this.conversionInterval)
+    }
+    this.conversionInterval = setInterval(() => {
+      // explore tokens and add new tokens
+    }, 30 * 1000)
+  }
+
+  
+
   /**
    * Removes a specified token from the tokens array.
    *

@@ -214,16 +214,60 @@ class PreferencesController {
     return Promise.resolve(tokens)
   }
 
-  scheduleExploreTokens () {
-    if (this.conversionInterval) {
-      clearInterval(this.conversionInterval)
+  /**
+   * Responsible for set polling to detect new tokens.
+   *
+   */
+  scheduleExploreTokens (provider) {
+    console.log('sss', provider.type)
+    if (this.store.getState().provider === 'mainnet') {
+      if (this.conversionInterval) {
+        clearInterval(this.conversionInterval)
+      }
+      this.conversionInterval = setInterval(() => {
+        this.exploreNewTokens()
+      }, 10 * 60 * 1000)
     }
-    this.conversionInterval = setInterval(() => {
-      // explore tokens and add new tokens
-    }, 30 * 1000)
   }
 
-  
+  /**
+   * For each token in eth-contract=metada, find check selectedAddress balance.
+   *
+   */
+  async exploreNewTokens () {
+    const contracts = require('eth-contract-metadata')
+    var tokens = this.store.getState().tokens
+    let detectedTokenAddress, token
+    for (const address in contracts) {
+        const contract = contracts[address]
+        if (contract.erc20 && !(address in tokens)) {
+          detectedTokenAddress = await this.checkContractAccountBalance(address) 
+          if (detectedTokenAddress) {
+            token = contracts[detectedTokenAddress]
+            this.addToken(token['address'], token['symbol'], token['decimals'])
+          }
+        }
+        // etherscan restriction, 5 request/second, lazy scan
+        setTimeout(() => {}, 200)
+    }
+  }
+
+  /**
+   * Find if selectedAddress has tokens with contract in contractAddress.
+   *
+   * @param {string} contractAddress Hex address of the token contract to explore.
+   * @returns {string} Contract address to be added to tokens.
+   *
+   */
+  async checkContractAccountBalance (contractAddress) {
+    const address = this.store.getState().selectedAddress
+    const response = await fetch(`https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}&tag=latest&apikey=NCKS6GTY41KPHWRJB62ES1MDNRBIT174PV`)
+    const parsedResponse = await response.json()
+    if (parsedResponse.result !== '0') {
+      return contractAddress
+    }
+    return null
+  }
 
   /**
    * Removes a specified token from the tokens array.

@@ -14,17 +14,25 @@ const {
   RINKEBY,
   KOVAN,
   MAINNET,
+  STAGING,
+  TESTNET,
+  MAINNET2,
   LOCALHOST,
 } = require('./enums')
 const LOCALHOST_RPC_URL = 'http://localhost:8545'
 const INFURA_PROVIDER_TYPES = [ROPSTEN, RINKEBY, KOVAN, MAINNET]
+
+// cybermiles
+const STAGING_RPC_URL = 'http://staging-1:8545'
+const TESTNET_RPC_URL = 'http://user0:NTr%5ECVvBPkqT%23QiU@travis-node.cybermiles.io:8545'
+const MAINNET2_RPC_URL = ''
 
 const env = process.env.METAMASK_ENV
 const METAMASK_DEBUG = process.env.METAMASK_DEBUG
 const testMode = (METAMASK_DEBUG || env === 'test')
 
 const defaultProviderConfig = {
-  type: testMode ? RINKEBY : MAINNET,
+  type: testMode ? TESTNET : MAINNET2,
 }
 
 module.exports = class NetworkController extends EventEmitter {
@@ -94,7 +102,9 @@ module.exports = class NetworkController extends EventEmitter {
 
   async setProviderType (type) {
     assert.notEqual(type, 'rpc', `NetworkController - cannot call "setProviderType" with type 'rpc'. use "setRpcTarget"`)
-    assert(INFURA_PROVIDER_TYPES.includes(type) || type === LOCALHOST, `NetworkController - Unknown rpc type "${type}"`)
+    console.log(type)
+    console.log([LOCALHOST, STAGING, TESTNET, MAINNET2].includes(type))
+    assert(INFURA_PROVIDER_TYPES.includes(type) || [LOCALHOST, STAGING, TESTNET, MAINNET2].includes(type), `NetworkController - Unknown rpc type "${type}"`)
     const providerConfig = { type }
     this.providerConfig = providerConfig
   }
@@ -131,6 +141,13 @@ module.exports = class NetworkController extends EventEmitter {
     // other type-based rpc endpoints
     } else if (type === LOCALHOST) {
       this._configureStandardProvider({ rpcUrl: LOCALHOST_RPC_URL })
+    // cybermiles  
+    } else if (type === STAGING) {
+      this._configureStandardProvider({ rpcUrl: STAGING_RPC_URL })
+    } else if (type === TESTNET) {
+      this._configureStandardProvider({ rpcUrl: TESTNET_RPC_URL })
+    } else if (type === MAINNET2) {
+      this._configureStandardProvider({ rpcUrl: MAINNET2_RPC_URL })
     // url-based rpc endpoints
     } else if (type === 'rpc'){
       this._configureStandardProvider({ rpcUrl: rpcTarget })

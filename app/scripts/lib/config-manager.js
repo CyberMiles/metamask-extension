@@ -7,6 +7,10 @@ const {
   RINKEBY_RPC_URL,
 } = require('../controllers/network/enums')
 
+const STAGING_RPC_URL = "http://staging-1:8545"
+const TESTNET_RPC_URL = "http://user0:NTr%5ECVvBPkqT%23QiU@travis-node.cybermiles.io:8545"
+const MAINNET2_RPC_URL = ""
+
 /* The config-manager is a convenience object
  * wrapping a pojo-migrator.
  *
@@ -163,6 +167,13 @@ ConfigManager.prototype.getCurrentRpcAddress = function () {
 
     case 'rinkeby':
       return RINKEBY_RPC_URL
+
+    case 'staging':
+      return STAGING_RPC_URL
+    case 'testnet':
+      return TESTNET_RPC_URL
+    case 'mainnet2':
+      return MAINNET2_RPC_URL
 
     default:
       return provider && provider.rpcTarget ? provider.rpcTarget : RINKEBY_RPC_URL

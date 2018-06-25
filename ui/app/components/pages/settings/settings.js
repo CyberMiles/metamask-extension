@@ -142,6 +142,24 @@ class Settings extends Component {
         color = '#ebb33f'
         break
 
+      case 'staging':
+        title = this.context.t('currentNetwork')
+        value = this.context.t('staging')
+        color = '#e91550'
+        break
+
+      case 'testnet':
+        title = this.context.t('currentNetwork')
+        value = this.context.t('testnet')
+        color = '#690496'
+        break
+
+      case 'mainnet2':
+        title = this.context.t('currentNetwork')
+        value = this.context.t('mainnet2')
+        color = '#038789'
+        break
+
       default:
         title = this.context.t('currentRpc')
         value = provider.rpcTarget

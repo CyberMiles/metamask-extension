@@ -49,12 +49,18 @@ Network.prototype.render = function () {
   } else if (parseInt(networkNumber) === 3) {
     hoverText = 'Ropsten Test Network'
     iconName = 'ropsten-test-network'
-  } else if (providerName === 'kovan') {
-    hoverText = 'Kovan Test Network'
-    iconName = 'kovan-test-network'
   } else if (providerName === 'rinkeby') {
     hoverText = 'Rinkeby Test Network'
     iconName = 'rinkeby-test-network'
+  } else if (providerName === 'staging') {
+    hoverText = 'Staging Network'
+    iconName = 'staging-network'
+  } else if (providerName === 'testnet') {
+    hoverText = 'Test Network'
+    iconName = 'test-network'
+  } else if (providerName === 'mainnet2') {
+    hoverText = 'Main Network'
+    iconName = 'mainnet2-network'
   } else {
     hoverText = 'Unknown Private Network'
     iconName = 'unknown-private-network'
@@ -106,6 +112,38 @@ Network.prototype.render = function () {
                   color: '#e7a218',
                 }},
               'Rinkeby Test Net'),
+              props.onClick && h('i.fa.fa-caret-down.fa-lg'),
+            ])
+          case 'mainnet2-network':
+            return h('.network-indicator', [
+              h('.menu-icon.diamond'),
+              h('.network-name', {
+                style: {
+                  color: '#e7a218',
+                }
+              },
+                'MainNet'),
+              props.onClick && h('i.fa.fa-caret-down.fa-lg'),
+            ])
+          case 'staging-network':
+            return h('.network-indicator', [
+              h('.menu-icon.red-dot'),
+              h('.network-name', {
+                style: {
+                  color: '#e7a218',
+                }},
+              'StagingNet'),
+              props.onClick && h('i.fa.fa-caret-down.fa-lg'),
+            ])
+          case 'test-network':
+            return h('.network-indicator', [
+              h('.menu-icon.golden-square'),
+              h('.network-name', {
+                style: {
+                  color: '#e7a218',
+                }
+              },
+                'TestNet'),
               props.onClick && h('i.fa.fa-caret-down.fa-lg'),
             ])
           default:

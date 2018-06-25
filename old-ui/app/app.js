@@ -255,7 +255,7 @@ App.prototype.renderNetworkDropdown = function () {
       padding: '2px 16px 2px 0px',
     },
   }, [
-
+/*
     h(
       DropdownMenuItem,
       {
@@ -293,23 +293,6 @@ App.prototype.renderNetworkDropdown = function () {
     h(
       DropdownMenuItem,
       {
-        key: 'kovan',
-        closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
-        onClick: () => props.dispatch(actions.setProviderType('kovan')),
-        style: {
-          fontSize: '18px',
-        },
-      },
-      [
-        h('.menu-icon.hollow-diamond'),
-        'Kovan Test Network',
-        providerType === 'kovan' ? h('.check', '✓') : null,
-      ]
-    ),
-
-    h(
-      DropdownMenuItem,
-      {
         key: 'rinkeby',
         closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
         onClick: () => props.dispatch(actions.setProviderType('rinkeby')),
@@ -321,6 +304,58 @@ App.prototype.renderNetworkDropdown = function () {
         h('.menu-icon.golden-square'),
         'Rinkeby Test Network',
         providerType === 'rinkeby' ? h('.check', '✓') : null,
+      ]
+    ),
+
+    h(
+      DropdownMenuItem,
+      {
+        key: 'mainnet2',
+        closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
+        onClick: () => props.dispatch(actions.setProviderType('mainnet2')),
+        style: {
+          fontSize: '18px',
+        },
+      },
+      [
+        h('.menu-icon.diamond'),
+        'Main Network',
+        providerType === 'main' ? h('.check', '✓') : null,
+      ]
+    ),
+*/
+
+    h(
+      DropdownMenuItem,
+      {
+        key: 'staging',
+        closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
+        onClick: () => props.dispatch(actions.setProviderType('staging')),
+        style: {
+          fontSize: '18px',
+        },
+      },
+      [
+        h('.menu-icon.red-dot'),
+        'Staging Network',
+        providerType === 'staging' ? h('.check', '✓') : null,
+      ]
+    ),
+
+    h(
+      DropdownMenuItem,
+      {
+        key: 'testnet',
+        closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
+        onClick: () => props.dispatch(actions.setProviderType('testnet')),
+        style: {
+          fontSize: '18px',
+        },
+      },
+      [
+        h('.menu-icon.golden-square'),
+        'Test Network',
+        providerType === 'testnet' ? h('.check', '✓') : null,
       ]
     ),
 
@@ -407,6 +442,7 @@ App.prototype.renderDropdown = function () {
     h(DropdownMenuItem, {
       closeMenu: () => this.setState({ isMainMenuOpen: !isOpen }),
       onClick: () => {
+        return
         this.props.dispatch(actions.setFeatureFlag('betaUI', true, 'BETA_UI_NOTIFICATION_MODAL'))
       },
     }, 'Try Beta!'),
@@ -468,6 +504,7 @@ App.prototype.renderPrimary = function () {
       !props.isInitialized && h('.flex-row.flex-center.flex-grow', [
         h('p.pointer', {
           onClick: () => {
+            return
             global.platform.openExtensionInBrowser()
             props.dispatch(actions.setFeatureFlag('betaUI', true, 'BETA_UI_NOTIFICATION_MODAL'))
           },
@@ -667,10 +704,14 @@ App.prototype.getNetworkName = function () {
     name = 'Main Ethereum Network'
   } else if (providerName === 'ropsten') {
     name = 'Ropsten Test Network'
-  } else if (providerName === 'kovan') {
-    name = 'Kovan Test Network'
   } else if (providerName === 'rinkeby') {
     name = 'Rinkeby Test Network'
+  } else if (providerName === 'staging') {
+    name = 'Staging Network'
+  } else if (providerName === 'testnet') {
+    name = 'Test Network'
+  } else if (providerName === 'mainnet2') {
+    name = 'Main Network'
   } else {
     name = 'Unknown Private Network'
   }

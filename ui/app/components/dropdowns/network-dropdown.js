@@ -106,12 +106,8 @@ NetworkDropdown.prototype.render = function () {
 
       h('div.network-dropdown-divider'),
 
-      h('div.network-dropdown-content',
-        {},
-        this.context.t('defaultNetwork')
-      ),
     ]),
-
+/*
     h(
       DropdownMenuItem,
       {
@@ -203,6 +199,73 @@ NetworkDropdown.prototype.render = function () {
     h(
       DropdownMenuItem,
       {
+        key: 'mainnet2',
+        closeMenu: () => this.props.hideNetworkDropdown(),
+        onClick: () => props.setProviderType('mainnet2'),
+        style: dropdownMenuItemStyle,
+      },
+      [
+        providerType === 'mainnet2' ? h('i.fa.fa-check') : h('.network-check__transparent', '✓'),
+        h(NetworkDropdownIcon, {
+          backgroundColor: '#29B6AF',
+          isSelected: providerType === 'mainnet2',
+        }),
+        h('span.network-name-item', {
+          style: {
+            color: providerType === 'mainnet2' ? '#ffffff' : '#9b9b9b',
+          },
+        }, this.context.t('mainnet')),
+      ]
+    ),
+*/
+
+    h(
+      DropdownMenuItem,
+      {
+        key: 'staging',
+        closeMenu: () => this.props.hideNetworkDropdown(),
+        onClick: () => props.setProviderType('staging'),
+        style: dropdownMenuItemStyle,
+      },
+      [
+        providerType === 'staging' ? h('i.fa.fa-check') : h('.network-check__transparent', '✓'),
+        h(NetworkDropdownIcon, {
+          backgroundColor: '#ff4a8d',
+          isSelected: providerType === 'staging',
+        }),
+        h('span.network-name-item', {
+          style: {
+            color: providerType === 'staging' ? '#ffffff' : '#9b9b9b',
+          },
+        }, this.context.t('staging')),
+      ]
+    ),
+
+    h(
+      DropdownMenuItem,
+      {
+        key: 'testnet',
+        closeMenu: () => this.props.hideNetworkDropdown(),
+        onClick: () => props.setProviderType('testnet'),
+        style: dropdownMenuItemStyle,
+      },
+      [
+        providerType === 'testnet' ? h('i.fa.fa-check') : h('.network-check__transparent', '✓'),
+        h(NetworkDropdownIcon, {
+          backgroundColor: '#f6c343',
+          isSelected: providerType === 'testnet',
+        }),
+        h('span.network-name-item', {
+          style: {
+            color: providerType === 'testnet' ? '#ffffff' : '#9b9b9b',
+          },
+        }, this.context.t('testnet')),
+      ]
+    ),
+
+    h(
+      DropdownMenuItem,
+      {
         key: 'default',
         closeMenu: () => this.props.hideNetworkDropdown(),
         onClick: () => props.setProviderType('localhost'),
@@ -264,6 +327,12 @@ NetworkDropdown.prototype.getNetworkName = function () {
     name = this.context.t('kovan')
   } else if (providerName === 'rinkeby') {
     name = this.context.t('rinkeby')
+  } else if (providerName === 'staging') {
+    name = this.context.t('staging')
+  } else if (providerName === 'testnet') {
+    name = this.context.t('testnet')
+  } else if (providerName === 'mainnet2') {
+    name = this.context.t('mainnet2')
   } else {
     name = this.context.t('unknownNetwork')
   }

@@ -2,7 +2,7 @@ const Component = require('react').Component
 const PropTypes = require('prop-types')
 const h = require('react-hyperscript')
 const actions = require('../../../ui/app/actions')
-const genAccountLink = require('etherscan-link').createAccountLink
+const genAccountLink = require('../../../ui/lib/account-link')
 const connect = require('react-redux').connect
 const Dropdown = require('./dropdown').Dropdown
 const DropdownMenuItem = require('./dropdown').DropdownMenuItem
@@ -193,7 +193,7 @@ class AccountDropdowns extends Component {
               global.platform.openWindow({ url })
             },
           },
-          'View account on Etherscan',
+          'View account on explorer',
         ),
         h(
           DropdownMenuItem,

@@ -3,7 +3,8 @@ const PropTypes = require('prop-types')
 const connect = require('react-redux').connect
 const h = require('react-hyperscript')
 const inherits = require('util').inherits
-const prefixForNetwork = require('../../lib/etherscan-prefix-for-network')
+// const prefixForNetwork = require('../../lib/etherscan-prefix-for-network')
+const etherscanLinkFor = require('../../lib/explorer-link')
 const selectors = require('../selectors')
 const TxListItem = require('./tx-list-item')
 const ShiftListItem = require('./shift-list-item')
@@ -147,9 +148,4 @@ TxList.prototype.view = function (txHash, network) {
 
 function navigateTo (url) {
   global.platform.openWindow({ url })
-}
-
-function etherscanLinkFor (txHash, network) {
-  const prefix = prefixForNetwork(network)
-  return `https://${prefix}etherscan.io/tx/${txHash}`
 }

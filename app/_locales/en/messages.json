@@ -212,7 +212,7 @@
     "description": "Tells the user what coin they have selected to deposit with shapeshift"
   },
   "depositEth": {
-    "message": "Deposit Eth"
+    "message": "Deposit Cmt"
   },
   "depositEther": {
     "message": "Deposit Ether"
@@ -281,7 +281,7 @@
     "message": "Passwords Don't Match"
   },
   "etherscanView": {
-    "message": "View account on Etherscan"
+    "message": "View account on explorer"
   },
   "exchangeRate": {
     "message": "Exchange Rate"
@@ -694,6 +694,15 @@
   "ropsten": {
     "message": "Ropsten Test Network"
   },
+  "staging": {
+    "message": "Staging Network"
+  },
+  "testnet": {
+    "message": "Test Network"
+  },
+  "mainnet2": {
+    "message": "Main Network"
+  },
   "rpc": {
     "message": "Custom RPC"
   },
@@ -711,6 +720,15 @@
   },
   "connectingToRinkeby": {
     "message": "Connecting to Rinkeby Test Network"
+  },
+  "connectingToStaging": {
+    "message": "Connecting to Staging Network"
+  },
+  "connectingToTestnet": {
+    "message": "Connecting to Test Network"
+  },
+  "connectingToMainnet2": {
+    "message": "Connecting to Main Network"
   },
   "connectingToUnknown": {
     "message": "Connecting to Unknown Network"
@@ -769,13 +787,13 @@
     "message": "Send"
   },
   "sendETH": {
-    "message": "Send ETH"
+    "message": "Send CMT"
   },
   "sendTokens": {
     "message": "Send Tokens"
   },
   "onlySendToEtherAddress": {
-    "message": "Only send ETH to an Ethereum address."
+    "message": "Only send CMT to an CMT address."
   },
   "onlySendTokensToAccountAddress": {
     "message": "Only send $1 to an Ethereum account address.",

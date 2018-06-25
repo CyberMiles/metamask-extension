@@ -227,6 +227,12 @@ class App extends Component {
       name = this.context.t('connectingToRopsten')
     } else if (providerName === 'rinkeby') {
       name = this.context.t('connectingToRinkeby')
+    } else if (providerName === 'staging') {
+      name = this.context.t('connectingToStaging')
+    } else if (providerName === 'testnet') {
+      name = this.context.t('connectingToTestnet')
+    } else if (providerName === 'mainnet2') {
+      name = this.context.t('connectingToMainnet2')
     } else {
       name = this.context.t('connectingToUnknown')
     }
@@ -248,6 +254,12 @@ class App extends Component {
       name = this.context.t('kovan')
     } else if (providerName === 'rinkeby') {
       name = this.context.t('rinkeby')
+    } else if (providerName === 'staging') {
+      name = this.context.t('staging')
+    } else if (providerName === 'testnet') {
+      name = this.context.t('testnet')
+    } else if (providerName === 'mainnet2') {
+      name = this.context.t('mainnet2')
     } else {
       name = this.context.t('unknownNetwork')
     }

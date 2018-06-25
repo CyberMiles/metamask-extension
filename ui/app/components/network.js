@@ -63,6 +63,15 @@ Network.prototype.render = function () {
   } else if (providerName === 'rinkeby') {
     hoverText = context.t('rinkeby')
     iconName = 'rinkeby-test-network'
+  } else if (providerName === 'staging') {
+    hoverText = context.t('staging')
+    iconName = 'staging-network'
+  } else if (providerName === 'testnet') {
+    hoverText = context.t('testnet')
+    iconName = 'test-network'
+  } else if (providerName === 'mainnet2') {
+    hoverText = context.t('mainnet2')
+    iconName = 'mainnet2-network'
   } else {
     hoverText = context.t('unknownNetwork')
     iconName = 'unknown-private-network'
@@ -76,6 +85,9 @@ Network.prototype.render = function () {
         'ropsten-test-network': providerName === 'ropsten' || parseInt(networkNumber) === 3,
         'kovan-test-network': providerName === 'kovan',
         'rinkeby-test-network': providerName === 'rinkeby',
+        'staging-network': providerName === 'staging',
+        'testnet-network': providerName === 'testnet',
+        'mainnet2-network': providerName === 'mainnet2',
       }),
       title: hoverText,
       onClick: (event) => {
@@ -120,6 +132,33 @@ Network.prototype.render = function () {
                 nonSelectBackgroundColor: '#ecb23e',
               }),
               h('.network-name', context.t('rinkeby')),
+              h('i.fa.fa-chevron-down.fa-lg.network-caret'),
+            ])
+          case 'mainnet2-network':
+            return h('.network-indicator', [
+              h(NetworkDropdownIcon, {
+                backgroundColor: '#038789', // $blue-lagoon
+                nonSelectBackgroundColor: '#15afb2',
+              }),
+              h('.network-name', context.t('mainnet2')),
+              h('i.fa.fa-chevron-down.fa-lg.network-caret'),
+            ])
+          case 'staging-network':
+            return h('.network-indicator', [
+              h(NetworkDropdownIcon, {
+                backgroundColor: '#e91550', // $crimson
+                nonSelectBackgroundColor: '#ec2c50',
+              }),
+              h('.network-name', context.t('staging')),
+              h('i.fa.fa-chevron-down.fa-lg.network-caret'),
+            ])  
+          case 'test-network':
+            return h('.network-indicator', [
+              h(NetworkDropdownIcon, {
+                backgroundColor: '#ebb33f', // $tulip-tree
+                nonSelectBackgroundColor: '#ecb23e',
+              }),
+              h('.network-name', context.t('testnet')),
               h('i.fa.fa-chevron-down.fa-lg.network-caret'),
             ])
           default:

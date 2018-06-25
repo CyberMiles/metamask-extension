@@ -5,7 +5,7 @@ const connect = require('react-redux').connect
 
 const EthBalance = require('./eth-balance')
 const addressSummary = require('../util').addressSummary
-const explorerLink = require('etherscan-link').createExplorerLink
+const explorerLink = require('../../../ui/lib/explorer-link')
 const CopyButton = require('./copyButton')
 const vreme = new (require('vreme'))()
 const Tooltip = require('./tooltip')
@@ -56,7 +56,7 @@ TransactionListItem.prototype.render = function () {
 
   let isLinkable = false
   const numericNet = parseInt(network)
-  isLinkable = numericNet === 1 || numericNet === 3 || numericNet === 4 || numericNet === 42
+  isLinkable = numericNet === 1 || numericNet === 3 || numericNet === 4 || numericNet === 42 || numericNet === 111
 
   var isMsg = ('msgParams' in transaction)
   var isTx = ('txParams' in transaction)

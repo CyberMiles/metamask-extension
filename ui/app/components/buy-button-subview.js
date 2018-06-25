@@ -144,12 +144,21 @@ BuyButtonSubview.prototype.primarySubview = function () {
     case '1':
       return this.mainnetSubview()
 
-    // Ropsten, Rinkeby, Kovan
+    // Ropsten, Rinkeby, Kovan, Travis
     case '3':
     case '4':
     case '42':
+    case '266':
+    case '267':
+    case '268':
+    case '111':
       const networkName = getNetworkDisplayName(network)
       const label = `${networkName} ${this.context.t('testFaucet')}`
+      const funcClick =
+        network == '111'
+          ? () => this.navigateTo('http://travis-faucet.cybermiles.io/')
+          : () => this.props.dispatch(actions.buyEth({ network }))
+ 
       return (
         h('div.flex-column', {
           style: {
@@ -158,7 +167,7 @@ BuyButtonSubview.prototype.primarySubview = function () {
           },
         }, [
           h('button.text-transform-uppercase', {
-            onClick: () => this.props.dispatch(actions.buyEth({ network })),
+            onClick: funcClick,
             style: {
               marginTop: '15px',
             },

@@ -2,16 +2,25 @@ const ROPSTEN = 'ropsten'
 const RINKEBY = 'rinkeby'
 const KOVAN = 'kovan'
 const MAINNET = 'mainnet'
+const STAGING = 'staging'
+const TESTNET = 'testnet'
+const MAINNET2 = 'mainnet2'
 const LOCALHOST = 'localhost'
 
 const ROPSTEN_CODE = 3
 const RINKEYBY_CODE = 4
 const KOVAN_CODE = 42
+const STAGING_CODE = 266
+const TESTNET_CODE = 111  // 267
+const MAINNET2_CODE = 268
 
 const ROPSTEN_DISPLAY_NAME = 'Ropsten'
 const RINKEBY_DISPLAY_NAME = 'Rinkeby'
 const KOVAN_DISPLAY_NAME = 'Kovan'
 const MAINNET_DISPLAY_NAME = 'Main Ethereum Network'
+const STAGING_DISPLAY_NAME = 'StagingNet'
+const TESTNET_DISPLAY_NAME = 'TestNet'
+const MAINNET2_DISPLAY_NAME = 'MainNet'
 
 
 module.exports = {
@@ -19,12 +28,21 @@ module.exports = {
   RINKEBY,
   KOVAN,
   MAINNET,
+  STAGING,
+  TESTNET,
+  MAINNET2,
   LOCALHOST,
   ROPSTEN_CODE,
   RINKEYBY_CODE,
   KOVAN_CODE,
+  STAGING_CODE,
+  TESTNET_CODE,
+  MAINNET2_CODE,
   ROPSTEN_DISPLAY_NAME,
   RINKEBY_DISPLAY_NAME,
   KOVAN_DISPLAY_NAME,
   MAINNET_DISPLAY_NAME,
+  STAGING_DISPLAY_NAME,
+  TESTNET_DISPLAY_NAME,
+  MAINNET2_DISPLAY_NAME,
 }

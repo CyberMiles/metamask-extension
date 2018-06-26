@@ -102,8 +102,6 @@ module.exports = class NetworkController extends EventEmitter {
 
   async setProviderType (type) {
     assert.notEqual(type, 'rpc', `NetworkController - cannot call "setProviderType" with type 'rpc'. use "setRpcTarget"`)
-    console.log(type)
-    console.log([LOCALHOST, STAGING, TESTNET, MAINNET2].includes(type))
     assert(INFURA_PROVIDER_TYPES.includes(type) || [LOCALHOST, STAGING, TESTNET, MAINNET2].includes(type), `NetworkController - Unknown rpc type "${type}"`)
     const providerConfig = { type }
     this.providerConfig = providerConfig

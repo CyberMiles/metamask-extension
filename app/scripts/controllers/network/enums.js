@@ -10,9 +10,9 @@ const LOCALHOST = 'localhost'
 const ROPSTEN_CODE = 3
 const RINKEYBY_CODE = 4
 const KOVAN_CODE = 42
-const STAGING_CODE = 266
-const TESTNET_CODE = 111  // 267
-const MAINNET2_CODE = 268
+const STAGING_CODE = 20
+const TESTNET_CODE = 111  // 19
+const MAINNET2_CODE = 18
 
 const ROPSTEN_DISPLAY_NAME = 'Ropsten'
 const RINKEBY_DISPLAY_NAME = 'Rinkeby'

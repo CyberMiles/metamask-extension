@@ -11,9 +11,9 @@ module.exports = function (hash, network) {
       link = `http://${prefix}etherscan.io/tx/${hash}`
       break
     // travis net
-    case 266:
-    case 267:
-    case 268:
+    case 18:
+    case 19:
+    case 20:
     case 111:
       link = `https://travis.cybermiles.io/tx/${hash}`
       break

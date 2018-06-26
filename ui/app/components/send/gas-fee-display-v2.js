@@ -22,7 +22,7 @@ GasFeeDisplay.prototype.render = function () {
     conversionRate,
     gasTotal,
     onClick,
-    primaryCurrency = 'ETH',
+    primaryCurrency = 'CMT',
     convertedCurrency,
     gasLoadingError,
   } = this.props

@@ -111,7 +111,7 @@ TxListItem.prototype.getSendEtherTotal = function () {
   const totalInFiat = conversionUtil(transactionAmount, {
     fromNumericBase: 'hex',
     toNumericBase: 'dec',
-    fromCurrency: 'ETH',
+    fromCurrency: 'CMT',
     toCurrency: currentCurrency,
     fromDenomination: 'WEI',
     numberOfDecimals: 2,
@@ -128,7 +128,7 @@ TxListItem.prototype.getSendEtherTotal = function () {
   })
 
   return {
-    total: `${totalInETH} ETH`,
+    total: `${totalInETH} CMT`,
     fiatTotal: `${totalInFiat} ${currentCurrency.toUpperCase()}`,
   }
 }

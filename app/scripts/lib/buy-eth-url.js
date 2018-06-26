@@ -30,8 +30,8 @@ function getBuyEthUrl ({ network, amount, address }) {
       url = 'https://github.com/kovan-testnet/faucet'
       break
 
-    case '268':
-      url = 'https://faucet.cybermiles.io/'
+    case '111':
+      url = 'http://travis-faucet.cybermiles.io/'
       break
   }
   return url

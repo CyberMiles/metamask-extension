@@ -212,10 +212,10 @@
     "description": "Tells the user what coin they have selected to deposit with shapeshift"
   },
   "depositEth": {
-    "message": "Deposit Cmt"
+    "message": "Deposit CMT"
   },
   "depositEther": {
-    "message": "Deposit Ether"
+    "message": "Deposit CMT"
   },
   "depositFiat": {
     "message": "Deposit with Fiat"
@@ -236,10 +236,10 @@
     "message": "Direct Deposit"
   },
   "directDepositEther": {
-    "message": "Directly Deposit Ether"
+    "message": "Directly Deposit CMT"
   },
   "directDepositEtherExplainer": {
-    "message": "If you already have some Ether, the quickest way to get Ether in your new wallet by direct deposit."
+    "message": "If you already have some CMT, the quickest way to get CMT in your new wallet by direct deposit."
   },
   "done": {
     "message": "Done"
@@ -350,11 +350,11 @@
     "message": "Generating transaction"
   },
   "getEther": {
-    "message": "Get Ether"
+    "message": "Get CMT"
   },
   "getEtherFromFaucet": {
-    "message": "Get Ether from a faucet for the $1",
-    "description": "Displays network name for Ether faucet"
+    "message": "Get CMT from a faucet for the $1",
+    "description": "Displays network name for CMT faucet"
   },
   "greaterThanMin": {
     "message": "must be greater than or equal to $1.",
@@ -377,10 +377,10 @@
     "message": "Hide Token?"
   },
   "howToDeposit": {
-    "message": "How would you like to deposit Ether?"
+    "message": "How would you like to deposit CMT?"
   },
   "holdEther": {
-    "message": "It allows you to hold ether & tokens, and serves as your bridge to decentralized applications."
+    "message": "It allows you to hold CMT & tokens, and serves as your bridge to decentralized applications."
   },
   "import": {
     "message": "Import",
@@ -513,7 +513,7 @@
     "message": "Must select at least 1 token."
   },
   "needEtherInWallet": {
-    "message": "To interact with decentralized applications using MetaMask, you’ll need Ether in your wallet."
+    "message": "To interact with decentralized applications, you’ll need CMT in your wallet."
   },
   "needImportFile": {
     "message": "You must select a file to import.",
@@ -524,7 +524,7 @@
     "description": "Password and file needed to import an account"
   },
   "negativeETH": {
-    "message": "Can not send negative amounts of ETH."
+    "message": "Can not send negative amounts of CMT."
   },
   "networks": {
     "message": "Networks"
@@ -796,14 +796,14 @@
     "message": "Only send CMT to an CMT address."
   },
   "onlySendTokensToAccountAddress": {
-    "message": "Only send $1 to an Ethereum account address.",
+    "message": "Only send $1 to an CMT account address.",
     "description": "displays token symbol"
   },
   "searchTokens": {
     "message": "Search Tokens"
   },
   "sendTokensAnywhere": {
-    "message": "Send Tokens to anyone with an Ethereum account"
+    "message": "Send Tokens to anyone with an CMT account"
   },
   "settings": {
     "message": "Settings"

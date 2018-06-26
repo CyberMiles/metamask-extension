@@ -178,7 +178,7 @@ ConfirmSendEther.prototype.getAmount = function () {
   const FIAT = conversionUtil(txParams.value, {
     fromNumericBase: 'hex',
     toNumericBase: 'dec',
-    fromCurrency: 'ETH',
+    fromCurrency: 'CMT',
     toCurrency: currentCurrency,
     numberOfDecimals: 2,
     fromDenomination: 'WEI',
@@ -226,7 +226,7 @@ ConfirmSendEther.prototype.getGasFee = function () {
     fromNumericBase: 'BN',
     toNumericBase: 'dec',
     fromDenomination: 'WEI',
-    fromCurrency: 'ETH',
+    fromCurrency: 'CMT',
     toCurrency: currentCurrency,
     numberOfDecimals: 2,
     conversionRate,
@@ -458,7 +458,7 @@ ConfirmSendEther.prototype.render = function () {
 
             h('div.confirm-screen-section-column', [
               h('div.confirm-screen-row-info', `${convertedTotalInFiat} ${currentCurrency.toUpperCase()}`),
-              h('div.confirm-screen-row-detail', `${totalInETH} ETH`),
+              h('div.confirm-screen-row-detail', `${totalInETH} CMT`),
             ]),
 
             this.renderErrorMessage('insufficientFunds'),

@@ -11,7 +11,7 @@ const ROPSTEN_CODE = 3
 const RINKEYBY_CODE = 4
 const KOVAN_CODE = 42
 const STAGING_CODE = 20
-const TESTNET_CODE = 111  // 19
+const TESTNET_CODE = 19
 const MAINNET2_CODE = 18
 
 const ROPSTEN_DISPLAY_NAME = 'Ropsten'

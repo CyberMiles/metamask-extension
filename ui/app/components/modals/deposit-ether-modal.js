@@ -121,7 +121,7 @@ DepositEtherModal.prototype.render = function () {
   const { network, toCoinbase, address, toFaucet } = this.props
   const { buyingWithShapeshift } = this.state
 
-  const isTestNetwork = ['3', '4', '42', '111'].find(n => n === network)
+  const isTestNetwork = ['3', '4', '42', '19'].find(n => n === network)
   const networkName = getNetworkDisplayName(network)
 
   return h('div.page-container.page-container--full-width.page-container--full-height', {}, [

@@ -154,8 +154,12 @@ function navigateTo (url) {
 }
 
 function etherscanLinkFor (tokenAddress, address, network) {
-  if ([111, 18, 19, 20].includes(parseInt(network)))
-    return `https://travis.cybermiles.io/token/${tokenAddress}?a=${address}`
+  switch (parseInt(network)) {
+    case 19:
+      return `https://travis.cybermiles.io/token/${tokenAddress}?a=${address}`
+    default:
+      return null
+  }
   const prefix = prefixForNetwork(network)
   return `https://${prefix}etherscan.io/token/${tokenAddress}?a=${address}`
 }
@@ -163,4 +167,3 @@ function etherscanLinkFor (tokenAddress, address, network) {
 function tokenFactoryFor (tokenAddress) {
   return `https://tokenfactory.surge.sh/#/token/${tokenAddress}`
 }
-

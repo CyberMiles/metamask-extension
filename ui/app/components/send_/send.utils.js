@@ -252,6 +252,13 @@ function generateTokenTransferData ({ toAddress = '0x0', amount = '0x0', selecte
 }
 
 function estimateGasPriceFromRecentBlocks (recentBlocks) {
+  // travis: return 2gwei
+  return multiplyCurrencies(ONE_GWEI_IN_WEI_HEX, 2, {
+    aBase: 16,
+    bBase: 16,
+    toNumericBase: 'hex',
+  })
+
   // Return 1 gwei if no blocks have been observed:
   if (!recentBlocks || recentBlocks.length === 0) {
     return ONE_GWEI_IN_WEI_HEX

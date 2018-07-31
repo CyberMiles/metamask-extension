@@ -10,11 +10,7 @@ module.exports = function (hash, network) {
       const prefix = prefixForNetwork(network)
       link = `http://${prefix}etherscan.io/tx/${hash}`
       break
-    // travis net
-    case 18:
-    case 19:
-    case 20:
-    case 111:
+    case 19: // travis test net
       link = `https://travis.cybermiles.io/tx/${hash}`
       break
     default:

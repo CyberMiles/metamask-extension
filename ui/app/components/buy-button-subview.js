@@ -148,14 +148,11 @@ BuyButtonSubview.prototype.primarySubview = function () {
     case '3':
     case '4':
     case '42':
-    case '18':
     case '19':
-    case '20':
-    case '111':
       const networkName = getNetworkDisplayName(network)
       const label = `${networkName} ${this.context.t('testFaucet')}`
       const funcClick =
-        network == '111'
+        network == '19'
           ? () => this.navigateTo('http://travis-faucet.cybermiles.io/')
           : () => this.props.dispatch(actions.buyEth({ network }))
  

@@ -1,4 +1,4 @@
-module.exports = function (hash, network) {
+module.exports = function(hash, network) {
   const net = parseInt(network)
   let link
   switch (net) {
@@ -11,7 +11,7 @@ module.exports = function (hash, network) {
       link = `http://${prefix}etherscan.io/tx/${hash}`
       break
     case 19: // travis test net
-      link = `https://travis.cybermiles.io/tx/${hash}`
+      link = `https://testnet.cmttracking.io/tx/${hash}`
       break
     default:
       link = ''

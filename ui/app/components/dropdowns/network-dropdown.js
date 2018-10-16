@@ -195,6 +195,7 @@ NetworkDropdown.prototype.render = function () {
         }, this.context.t('rinkeby')),
       ]
     ),
+*/
 
     h(
       DropdownMenuItem,
@@ -214,10 +215,9 @@ NetworkDropdown.prototype.render = function () {
           style: {
             color: providerType === 'mainnet2' ? '#ffffff' : '#9b9b9b',
           },
-        }, this.context.t('mainnet')),
+        }, this.context.t('mainnet2')),
       ]
     ),
-*/
 
     h(
       DropdownMenuItem,

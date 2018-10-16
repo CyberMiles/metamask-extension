@@ -157,6 +157,8 @@ function etherscanLinkFor (tokenAddress, address, network) {
   switch (parseInt(network)) {
     case 19:
       return `https://testnet.cmttracking.io/token/${tokenAddress}?a=${address}`
+    case 18:
+      return `https://www.cmttracking.io/token/${tokenAddress}?a=${address}`
     default:
       return null
   }

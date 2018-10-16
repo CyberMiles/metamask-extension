@@ -20,6 +20,9 @@ module.exports = function (address, network) {
     case 19: // travis test net
       link = `https://testnet.cmttracking.io/address/${address}`
       break
+    case 18: // travis main net
+      link = `https://www.cmttracking.io/address/${address}`
+      break
     default:
       link = ''
       break

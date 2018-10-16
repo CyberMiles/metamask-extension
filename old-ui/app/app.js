@@ -306,7 +306,7 @@ App.prototype.renderNetworkDropdown = function () {
         providerType === 'rinkeby' ? h('.check', '✓') : null,
       ]
     ),
-
+*/
     h(
       DropdownMenuItem,
       {
@@ -323,7 +323,6 @@ App.prototype.renderNetworkDropdown = function () {
         providerType === 'main' ? h('.check', '✓') : null,
       ]
     ),
-*/
 
     h(
       DropdownMenuItem,

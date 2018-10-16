@@ -25,7 +25,7 @@ const INFURA_PROVIDER_TYPES = [ROPSTEN, RINKEBY, KOVAN, MAINNET]
 // cybermiles
 const STAGING_RPC_URL = 'http://staging-1:8545'
 const TESTNET_RPC_URL = 'http://user0:NTr%5ECVvBPkqT%23QiU@travis-node.cybermiles.io:8545'
-const MAINNET2_RPC_URL = ''
+const MAINNET2_RPC_URL = 'https://mainnet.cmtwallet.io:8545'
 
 const env = process.env.METAMASK_ENV
 const METAMASK_DEBUG = process.env.METAMASK_DEBUG

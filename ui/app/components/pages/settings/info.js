@@ -22,43 +22,9 @@ class Info extends Component {
   renderInfoLinks () {
     return (
       h('div.settings__content-item.settings__content-item--without-height', [
-        h('div.settings__info-link-header', this.context.t('links')),
         h('div.settings__info-link-item', [
           h('a', {
-            href: 'https://metamask.io/privacy.html',
-            target: '_blank',
-          }, [
-            h('span.settings__info-link', this.context.t('privacyMsg')),
-          ]),
-        ]),
-        h('div.settings__info-link-item', [
-          h('a', {
-            href: 'https://metamask.io/terms.html',
-            target: '_blank',
-          }, [
-            h('span.settings__info-link', this.context.t('terms')),
-          ]),
-        ]),
-        h('div.settings__info-link-item', [
-          h('a', {
-            href: 'https://metamask.io/attributions.html',
-            target: '_blank',
-          }, [
-            h('span.settings__info-link', this.context.t('attributions')),
-          ]),
-        ]),
-        h('hr.settings__info-separator'),
-        h('div.settings__info-link-item', [
-          h('a', {
-            href: 'https://support.metamask.io',
-            target: '_blank',
-          }, [
-            h('span.settings__info-link', this.context.t('supportCenter')),
-          ]),
-        ]),
-        h('div.settings__info-link-item', [
-          h('a', {
-            href: 'https://metamask.io/',
+            href: 'https://www.cybermiles.io/',
             target: '_blank',
           }, [
             h('span.settings__info-link', this.context.t('visitWebSite')),
@@ -67,7 +33,7 @@ class Info extends Component {
         h('div.settings__info-link-item', [
           h('a', {
             target: '_blank',
-            href: 'mailto:help@metamask.io?subject=Feedback',
+            href: 'mailto:support@cybermiles.io',
           }, [
             h('span.settings__info-link', this.context.t('emailUs')),
           ]),
@@ -83,14 +49,8 @@ class Info extends Component {
           h('div.settings__content-item.settings__content-item--without-height', [
             this.renderLogo(),
             h('div.settings__info-item', [
-              h('div.settings__info-version-header', 'MetaMask Version'),
+              h('div.settings__info-version-header', 'MetaMask for CMT Version'),
               h('div.settings__info-version-number', this.state.version),
-            ]),
-            h('div.settings__info-item', [
-              h(
-                'div.settings__info-about',
-                this.context.t('builtInCalifornia')
-              ),
             ]),
           ]),
           this.renderInfoLinks(),

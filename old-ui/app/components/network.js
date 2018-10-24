@@ -56,10 +56,10 @@ Network.prototype.render = function () {
     hoverText = 'Staging Network'
     iconName = 'staging-network'
   } else if (providerName === 'testnet') {
-    hoverText = 'Test Network'
+    hoverText = 'CMT Test Network'
     iconName = 'test-network'
   } else if (providerName === 'mainnet2') {
-    hoverText = 'Main Network'
+    hoverText = 'Main CyberMiles Network'
     iconName = 'mainnet2-network'
   } else {
     hoverText = 'Unknown Private Network'
@@ -122,7 +122,7 @@ Network.prototype.render = function () {
                   color: '#e7a218',
                 }
               },
-                'MainNet'),
+                'Main CyberMiles Network'),
               props.onClick && h('i.fa.fa-caret-down.fa-lg'),
             ])
           case 'staging-network':
@@ -143,7 +143,7 @@ Network.prototype.render = function () {
                   color: '#e7a218',
                 }
               },
-                'TestNet'),
+                'CMT Test Network'),
               props.onClick && h('i.fa.fa-caret-down.fa-lg'),
             ])
           default:

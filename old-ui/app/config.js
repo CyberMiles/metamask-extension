@@ -251,12 +251,12 @@ function currentProviderDisplay (metamaskState) {
 
     case 'testnet':
       title = 'Current Network'
-      value = 'Test Network'
+      value = 'CMT Test Network'
       break
 
     case 'mainnet2':
       title = 'Current Network'
-      value = 'Main Network'
+      value = 'Main CyberMiles Network'
       break
 
     default:

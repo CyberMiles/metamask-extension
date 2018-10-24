@@ -219,27 +219,27 @@ NetworkDropdown.prototype.render = function () {
       ]
     ),
 
-    h(
-      DropdownMenuItem,
-      {
-        key: 'staging',
-        closeMenu: () => this.props.hideNetworkDropdown(),
-        onClick: () => props.setProviderType('staging'),
-        style: dropdownMenuItemStyle,
-      },
-      [
-        providerType === 'staging' ? h('i.fa.fa-check') : h('.network-check__transparent', '✓'),
-        h(NetworkDropdownIcon, {
-          backgroundColor: '#ff4a8d',
-          isSelected: providerType === 'staging',
-        }),
-        h('span.network-name-item', {
-          style: {
-            color: providerType === 'staging' ? '#ffffff' : '#9b9b9b',
-          },
-        }, this.context.t('staging')),
-      ]
-    ),
+    // h(
+    //   DropdownMenuItem,
+    //   {
+    //     key: 'staging',
+    //     closeMenu: () => this.props.hideNetworkDropdown(),
+    //     onClick: () => props.setProviderType('staging'),
+    //     style: dropdownMenuItemStyle,
+    //   },
+    //   [
+    //     providerType === 'staging' ? h('i.fa.fa-check') : h('.network-check__transparent', '✓'),
+    //     h(NetworkDropdownIcon, {
+    //       backgroundColor: '#ff4a8d',
+    //       isSelected: providerType === 'staging',
+    //     }),
+    //     h('span.network-name-item', {
+    //       style: {
+    //         color: providerType === 'staging' ? '#ffffff' : '#9b9b9b',
+    //       },
+    //     }, this.context.t('staging')),
+    //   ]
+    // ),
 
     h(
       DropdownMenuItem,
@@ -327,8 +327,8 @@ NetworkDropdown.prototype.getNetworkName = function () {
     name = this.context.t('kovan')
   } else if (providerName === 'rinkeby') {
     name = this.context.t('rinkeby')
-  } else if (providerName === 'staging') {
-    name = this.context.t('staging')
+  // } else if (providerName === 'staging') {
+  //   name = this.context.t('staging')
   } else if (providerName === 'testnet') {
     name = this.context.t('testnet')
   } else if (providerName === 'mainnet2') {

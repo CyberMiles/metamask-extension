@@ -319,27 +319,27 @@ App.prototype.renderNetworkDropdown = function () {
       },
       [
         h('.menu-icon.diamond'),
-        'Main Network',
+        'Main CyberMiles Network',
         providerType === 'main' ? h('.check', '✓') : null,
       ]
     ),
 
-    h(
-      DropdownMenuItem,
-      {
-        key: 'staging',
-        closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
-        onClick: () => props.dispatch(actions.setProviderType('staging')),
-        style: {
-          fontSize: '18px',
-        },
-      },
-      [
-        h('.menu-icon.red-dot'),
-        'Staging Network',
-        providerType === 'staging' ? h('.check', '✓') : null,
-      ]
-    ),
+    // h(
+    //   DropdownMenuItem,
+    //   {
+    //     key: 'staging',
+    //     closeMenu: () => this.setState({ isNetworkMenuOpen: !isOpen }),
+    //     onClick: () => props.dispatch(actions.setProviderType('staging')),
+    //     style: {
+    //       fontSize: '18px',
+    //     },
+    //   },
+    //   [
+    //     h('.menu-icon.red-dot'),
+    //     'Staging Network',
+    //     providerType === 'staging' ? h('.check', '✓') : null,
+    //   ]
+    // ),
 
     h(
       DropdownMenuItem,
@@ -353,7 +353,7 @@ App.prototype.renderNetworkDropdown = function () {
       },
       [
         h('.menu-icon.golden-square'),
-        'Test Network',
+        'CMT Test Network',
         providerType === 'testnet' ? h('.check', '✓') : null,
       ]
     ),
@@ -707,9 +707,9 @@ App.prototype.getNetworkName = function () {
   } else if (providerName === 'staging') {
     name = 'Staging Network'
   } else if (providerName === 'testnet') {
-    name = 'Test Network'
+    name = 'CMT Test Network'
   } else if (providerName === 'mainnet2') {
-    name = 'Main Network'
+    name = 'Main CyberMiles Network'
   } else {
     name = 'Unknown Private Network'
   }

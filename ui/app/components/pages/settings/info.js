@@ -32,6 +32,30 @@ class Info extends Component {
         ]),
         h('div.settings__info-link-item', [
           h('a', {
+            href: 'https://www.cybermiles.io/cmt-wallet/',
+            target: '_blank',
+          }, [
+              h('span.settings__info-link', "CMT Wallet"),
+            ]),
+        ]),
+        h('div.settings__info-link-item', [
+          h('a', {
+            href: 'https://www.cmttracking.io/',
+            target: '_blank',
+          }, [
+              h('span.settings__info-link', "CMT Tracking"),
+            ]),
+        ]),
+        h('div.settings__info-link-item', [
+          h('a', {
+            href: 'http://travis-faucet.cybermiles.io/index.html',
+            target: '_blank',
+          }, [
+              h('span.settings__info-link', "Test Faucet"),
+            ]),
+        ]),
+        h('div.settings__info-link-item', [
+          h('a', {
             target: '_blank',
             href: 'mailto:support@cybermiles.io',
           }, [
@@ -49,8 +73,8 @@ class Info extends Component {
           h('div.settings__content-item.settings__content-item--without-height', [
             this.renderLogo(),
             h('div.settings__info-item', [
-              h('div.settings__info-version-header', 'MetaMask for CMT Version'),
-              h('div.settings__info-version-number', this.state.version),
+              h('div.settings__info-version-header', 'MetaMask for CMT'),
+              h('div.settings__info-version-number', `Version: ${this.state.version}`),
             ]),
           ]),
           this.renderInfoLinks(),

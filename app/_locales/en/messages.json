@@ -698,10 +698,10 @@
     "message": "Staging Network"
   },
   "testnet": {
-    "message": "Test Network"
+    "message": "CMT Test Network"
   },
   "mainnet2": {
-    "message": "Main Network"
+    "message": "Main CyberMiles Network"
   },
   "rpc": {
     "message": "Custom RPC"
@@ -725,10 +725,10 @@
     "message": "Connecting to Staging Network"
   },
   "connectingToTestnet": {
-    "message": "Connecting to Test Network"
+    "message": "Connecting to CMT Test Network"
   },
   "connectingToMainnet2": {
-    "message": "Connecting to Main Network"
+    "message": "Connecting to Main CyberMiles Network"
   },
   "connectingToUnknown": {
     "message": "Connecting to Unknown Network"
@@ -934,7 +934,7 @@
     "message": "Welcome to the New UI (Beta)"
   },
   "uiWelcomeMessage": {
-    "message": "You are now using the new Metamask UI."
+    "message": "You are now using the new UI."
   },
   "unapproved": {
     "message": "Unapproved"
@@ -980,7 +980,7 @@
     "message": "View on Etherscan"
   },
   "visitWebSite": {
-    "message": "Visit our web site"
+    "message": "CyberMiles"
   },
   "warning": {
     "message": "Warning"

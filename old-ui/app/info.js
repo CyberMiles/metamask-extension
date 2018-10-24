@@ -68,24 +68,36 @@ InfoScreen.prototype.render = function () {
             }},
             [
               h('div', [
-                h('a', {
+                h('a.info', {
                   href: 'https://www.cybermiles.io/',
                   target: '_blank',
-                }, [
-                  h('img.icon-size', {
-                    src: 'images/icon-128.png',
-                    style: {
-                      // IE6-9
-                      filter: 'grayscale(100%)',
-                      // Microsoft Edge and Firefox 35+
-                      WebkitFilter: 'grayscale(100%)',
-                    },
-                  }),
-                  h('div.info', 'Visit our web site'),
-                ]),
+                  style: { width: '85vw' },
+                }, 'CyberMiles'),
+              ]),
+              
+              h('div', [
+                h('a.info', {
+                  target: '_blank',
+                  style: { width: '85vw' },
+                  href: 'https://www.cybermiles.io/cmt-wallet/',
+                }, 'CMT Wallet'),
+              ]),
+              h('div', [
+                h('a.info', {
+                  target: '_blank',
+                  style: { width: '85vw' },
+                  href: 'https://www.cmttracking.io/',
+                }, 'CMT Tracking'),
+              ]),
+              h('div', [
+                h('a.info', {
+                  target: '_blank',
+                  style: { width: '85vw' },
+                  href: 'http://travis-faucet.cybermiles.io/index.html',
+                }, 'Test Faucet'),
               ]),
 
-              h('div.fa.fa-envelope', [
+              h('div', [
                 h('a.info', {
                   target: '_blank',
                   style: { width: '85vw' },

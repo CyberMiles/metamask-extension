@@ -33,6 +33,10 @@ function getBuyEthUrl ({ network, amount, address }) {
     case '19':
       url = 'http://travis-faucet.cybermiles.io/'
       break
+
+    case '18':
+      url = 'https://rfinex.com/market/cmteth'
+      break
   }
   return url
 }

@@ -138,13 +138,11 @@ BuyButtonSubview.prototype.primarySubview = function () {
     case '1':
       return this.mainnetSubview()
 
-    // Ropsten, Rinkeby, Kovan, Travis
-    case '3':
-    case '4':
-    case '42':
+    // Travis
     case '19':
+    case '18':
       const networkName = getNetworkDisplayName(network)
-      const label = `${networkName} Test Faucet`
+      const label = network == '19' ? `${networkName} Test Faucet` : 'Buy on Rfinex'
       const funcClick =
         network == '19'
           ? () => this.navigateTo('http://travis-faucet.cybermiles.io/')
@@ -163,15 +161,6 @@ BuyButtonSubview.prototype.primarySubview = function () {
               marginTop: '15px',
             },
           }, label),
-          // Kovan only: Dharma loans beta
-          network === '42' ? (
-            h('button.text-transform-uppercase', {
-              onClick: () => this.navigateTo('https://borrow.dharma.io/'),
-              style: {
-                marginTop: '15px',
-              },
-            }, 'Borrow With Dharma (Beta)')
-          ) : null,
       ])
     )
 

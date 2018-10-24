@@ -2,11 +2,10 @@
 
 **THIS AGREEMENT IS SUBJECT TO BINDING ARBITRATION AND A WAIVER OF CLASS ACTION RIGHTS AS DETAILED IN SECTION 13. PLEASE READ THE AGREEMENT CAREFULLY.**
 
-_Our Terms of Use have been updated as of September 5, 2016_
 
 ## 1. Acceptance of Terms ##
 
-MetaMask provides a platform for managing Ethereum (or "ETH") accounts, and allowing ordinary websites to interact with the Ethereum blockchain, while keeping the user in control over what transactions they approve, through our website located at[ ](http://metamask.io)[https://metamask.io/](https://metamask.io/) and browser plugin (the "Site") — which includes text, images, audio, code and other materials  (collectively, the “Content”) and all of the features, and services provided. The Site, and any other features, tools, materials, or other services offered from time to time by MetaMask are referred to here as the “Service.” Please read these Terms of Use (the “Terms” or “Terms of Use”) carefully before using the Service. By using or otherwise accessing the Services, or clicking to accept or agree to these Terms where that option is made available, you (1) accept and agree to these Terms (2) consent to the collection, use, disclosure and other handling of information as described in our Privacy Policy  and (3) any additional terms, rules and conditions of participation issued by MetaMask from time to time. If you do not agree to the Terms, then you may not access or use the Content or Services.
+"MetaMask for CMT" provides a platform for managing CyberMiles (or "CMT") accounts, and allowing ordinary websites to interact with the CyberMiles blockchain, while keeping the user in control over what transactions they approve, through our website located at[ ](http://cybermiles.io)[https://cybermiles.io/](https://cybermiles.io/) and browser plugin (the "Site") — which includes text, images, audio, code and other materials  (collectively, the “Content”) and all of the features, and services provided. The Site, and any other features, tools, materials, or other services offered from time to time by MetaMask are referred to here as the “Service.” Please read these Terms of Use (the “Terms” or “Terms of Use”) carefully before using the Service. By using or otherwise accessing the Services, or clicking to accept or agree to these Terms where that option is made available, you (1) accept and agree to these Terms (2) consent to the collection, use, disclosure and other handling of information as described in our Privacy Policy  and (3) any additional terms, rules and conditions of participation issued by MetaMask from time to time. If you do not agree to the Terms, then you may not access or use the Content or Services.
 
 ## 2. Modification of Terms of Use ##
 
@@ -32,11 +31,11 @@ You expressly understand and agree that your use of the Service is at your sole 
 
 ### 5.2 Sophistication and Risk of Cryptographic Systems ###
 
-By utilizing the Service or interacting with the Content or platform in any way, you represent that you understand the inherent risks associated with cryptographic systems; and warrant that you have an understanding of the usage and intricacies of native cryptographic tokens, like Ether (ETH) and Bitcoin (BTC), smart contract based tokens such as those that follow the Ethereum Token Standard (https://github.com/ethereum/EIPs/issues/20), and blockchain-based software systems.
+By utilizing the Service or interacting with the Content or platform in any way, you represent that you understand the inherent risks associated with cryptographic systems; and warrant that you have an understanding of the usage and intricacies of native cryptographic tokens, like CMT and Bitcoin (BTC), smart contract based tokens such as those that follow the Ethereum Token Standard (https://github.com/ethereum/EIPs/issues/20), and blockchain-based software systems.
 
 ### 5.3 Risk of Regulatory Actions in One or More Jurisdictions ###
 
-MetaMask and ETH could be impacted by one or more regulatory inquiries or regulatory action, which could impede or limit the ability of MetaMask to continue to develop, or which could impede or limit your ability to access or use the Service or Ethereum blockchain.
+MetaMask and CMT could be impacted by one or more regulatory inquiries or regulatory action, which could impede or limit the ability of MetaMask to continue to develop, or which could impede or limit your ability to access or use the Service or CyberMiles blockchain.
 
 ### 5.4 Risk of Weaknesses or Exploits in the Field of Cryptography ###
 
@@ -44,11 +43,11 @@ You acknowledge and understand that Cryptography is a progressing field. Advance
 
 ### 5.5 Volatility of Crypto Currencies ###
 
-You understand that Ethereum and other blockchain technologies and associated currencies or tokens are highly volatile due to many factors including but not limited to adoption, speculation, technology and security risks. You also acknowledge that the cost of transacting on such technologies is variable and may increase at any time causing impact to any activities taking place on the Ethereum blockchain. You acknowledge these risks and represent that MetaMask cannot be held liable for such fluctuations or increased costs.
+You understand that CyberMiles and other blockchain technologies and associated currencies or tokens are highly volatile due to many factors including but not limited to adoption, speculation, technology and security risks. You also acknowledge that the cost of transacting on such technologies is variable and may increase at any time causing impact to any activities taking place on the CyberMiles blockchain. You acknowledge these risks and represent that MetaMask cannot be held liable for such fluctuations or increased costs.
 
 ### 5.6 Application Security ###
 
-You acknowledge that Ethereum applications are code subject to flaws and acknowledge that you are solely responsible for evaluating any code provided by the Services or Content and the trustworthiness of any third-party websites, products, smart-contracts, or Content you access or use through the Service. You further expressly acknowledge and represent that Ethereum applications can be written maliciously or negligently, that MetaMask cannot be held liable for your interaction with such applications and that such applications may cause the loss of property or even identity. This warning and others later provided by MetaMask in no way evidence or represent an on-going duty to alert you to all of the potential risks of utilizing the Service or Content.
+You acknowledge that CyberMiles applications are code subject to flaws and acknowledge that you are solely responsible for evaluating any code provided by the Services or Content and the trustworthiness of any third-party websites, products, smart-contracts, or Content you access or use through the Service. You further expressly acknowledge and represent that CyberMiles applications can be written maliciously or negligently, that MetaMask cannot be held liable for your interaction with such applications and that such applications may cause the loss of property or even identity. This warning and others later provided by MetaMask in no way evidence or represent an on-going duty to alert you to all of the potential risks of utilizing the Service or Content.
 
 ## 6. Indemnity ##
 
@@ -62,7 +61,7 @@ SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR THE LIMIT
 
 ## 8. Our Proprietary Rights ##
 
-All title, ownership and intellectual property rights in and to the Service are owned by MetaMask or its licensors. You acknowledge and agree that the Service contains proprietary and confidential information that is protected by applicable intellectual property and other laws. Except as expressly authorized by MetaMask, you agree not to copy, modify, rent, lease, loan, sell, distribute, perform, display or create derivative works based on the Service, in whole or in part. MetaMask issues a license for MetaMask, found [here](https://github.com/MetaMask/metamask-plugin/blob/master/LICENSE). For information on other licenses utilized in the development of MetaMask, please see our attribution page at: [https://metamask.io/attributions.html](https://metamask.io/attributions.html)
+All title, ownership and intellectual property rights in and to the Service are owned by MetaMask or its licensors. You acknowledge and agree that the Service contains proprietary and confidential information that is protected by applicable intellectual property and other laws. Except as expressly authorized by MetaMask, you agree not to copy, modify, rent, lease, loan, sell, distribute, perform, display or create derivative works based on the Service, in whole or in part. 
 
 ## 9. Links ##
 
@@ -96,17 +95,8 @@ If you believe that your copyright or the copyright of a person on whose behalf 
 
 MetaMask’s Copyright Agent can be reached at:
 
-Email: copyright [at] metamask [dot] io
+Email: support [at] cybermiles [dot] io
 
-Mail:
-
-Attention:
-
-MetaMask Copyright ℅ ConsenSys
-
-49 Bogart Street
-
-Brooklyn, NY 11206
 
 ## 13. Binding Arbitration and Class Action Waiver ##
 
@@ -138,7 +128,7 @@ Notwithstanding the parties' decision to resolve all disputes through arbitratio
 
 ### 13.6 30-Day Right to Opt Out ###
 
-You have the right to opt-out and not be bound by the arbitration and class action waiver provisions set forth above by sending written notice of your decision to opt-out to the following address: MetaMask ℅ ConsenSys, 49 Bogart Street, Brooklyn NY 11206 and via email at legal-opt@metamask.io. The notice must be sent within 30 days of September 6, 2016 or your first use of the Service, whichever is later, otherwise you shall be bound to arbitrate disputes in accordance with the terms of those paragraphs. If you opt-out of these arbitration provisions, MetaMask also will not be bound by them.
+You have the right to opt-out and not be bound by the arbitration and class action waiver provisions set forth above by sending written notice of your decision to opt-out via email at support@cybermiles.io. The notice must be sent within 30 days  your first use of the Service, whichever is later, otherwise you shall be bound to arbitrate disputes in accordance with the terms of those paragraphs. If you opt-out of these arbitration provisions, MetaMask also will not be bound by them.
 
 ### 13.7 Changes to This Section ###
 
@@ -168,13 +158,4 @@ The section titles in the Terms are for convenience only and have no legal or co
 
 ### 14.5 Communications ###
 
-Users with questions, complaints or claims with respect to the Service may contact us using the relevant contact information set forth above and at communications@metamask.io.
-
-## 15 Related Links ##
-
-**[Terms of Use](https://metamask.io/terms.html)**
-
-**[Privacy](https://metamask.io/privacy.html)**
-
-**[Attributions](https://metamask.io/attributions.html)**
-
+Users with questions, complaints or claims with respect to the Service may contact us using the relevant contact information set forth above and at support@cybermiles.io.

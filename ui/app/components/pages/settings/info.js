@@ -48,6 +48,14 @@ class Info extends Component {
         ]),
         h('div.settings__info-link-item', [
           h('a', {
+            href: 'http://remix.cybermiles.io/',
+            target: '_blank',
+          }, [
+              h('span.settings__info-link', "Remix for CMT"),
+            ]),
+        ]),
+        h('div.settings__info-link-item', [
+          h('a', {
             href: 'http://travis-faucet.cybermiles.io/index.html',
             target: '_blank',
           }, [

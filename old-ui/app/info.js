@@ -93,6 +93,13 @@ InfoScreen.prototype.render = function () {
                 h('a.info', {
                   target: '_blank',
                   style: { width: '85vw' },
+                  href: 'http://remix.cybermiles.io/',
+                }, 'Remix for CMT'),
+              ]),
+              h('div', [
+                h('a.info', {
+                  target: '_blank',
+                  style: { width: '85vw' },
                   href: 'http://travis-faucet.cybermiles.io/index.html',
                 }, 'Test Faucet'),
               ]),

@@ -5,11 +5,11 @@ const inherits = require('util').inherits
 const connect = require('react-redux').connect
 const actions = require('../../actions')
 const { getSelectedIdentity } = require('../../selectors')
-const Identicon = require('../identicon')
+import Identicon from '../identicon'
 
-function mapStateToProps (state) {
+function mapStateToProps (state, ownProps) {
   return {
-    selectedIdentity: getSelectedIdentity(state),
+    selectedIdentity: ownProps.selectedIdentity || getSelectedIdentity(state),
   }
 }
 

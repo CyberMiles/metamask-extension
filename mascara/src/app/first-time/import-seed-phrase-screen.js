@@ -1,3 +1,4 @@
+import {validateMnemonic} from 'bip39'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -32,6 +33,7 @@ class ImportSeedPhraseScreen extends Component {
 
   parseSeedPhrase = (seedPhrase) => {
     return seedPhrase
+      .trim()
       .match(/\w+/g)
       .join(' ')
   }
@@ -39,8 +41,13 @@ class ImportSeedPhraseScreen extends Component {
   handleSeedPhraseChange (seedPhrase) {
     let seedPhraseError = null
 
-    if (seedPhrase && this.parseSeedPhrase(seedPhrase).split(' ').length !== 12) {
-      seedPhraseError = this.context.t('seedPhraseReq')
+    if (seedPhrase) {
+      const parsedSeedPhrase = this.parseSeedPhrase(seedPhrase)
+      if (parsedSeedPhrase.split(' ').length !== 12) {
+        seedPhraseError = this.context.t('seedPhraseReq')
+      } else if (!validateMnemonic(parsedSeedPhrase)) {
+        seedPhraseError = this.context.t('invalidSeedPhrase')
+      }
     }
 
     this.setState({ seedPhrase, seedPhraseError })

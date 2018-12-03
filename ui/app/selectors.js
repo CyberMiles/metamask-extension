@@ -1,6 +1,7 @@
-const valuesFor = require('./util').valuesFor
 const abi = require('human-standard-token-abi')
-
+import {
+  transactionsSelector,
+} from './selectors/transactions'
 const {
   multiplyCurrencies,
 } = require('./conversion-util')
@@ -11,29 +12,35 @@ const selectors = {
   getSelectedAccount,
   getSelectedToken,
   getSelectedTokenExchangeRate,
+  getSelectedTokenAssetImage,
+  getAssetImages,
   getTokenExchangeRate,
   conversionRateSelector,
   transactionsSelector,
   accountsWithSendEtherInfoSelector,
   getCurrentAccountWithSendEtherInfo,
-  getGasPrice,
-  getGasLimit,
+  getGasIsLoading,
   getForceGasMin,
   getAddressBook,
   getSendFrom,
   getCurrentCurrency,
+  getNativeCurrency,
   getSendAmount,
   getSelectedTokenToFiatRate,
   getSelectedTokenContract,
   autoAddToBetaUI,
+  getShouldUseNewUi,
   getSendMaxModeState,
   getCurrentViewContext,
+  getTotalUnapprovedCount,
+  preferencesSelector,
+  getMetaMaskAccounts,
 }
 
 module.exports = selectors
 
 function getSelectedAddress (state) {
-  const selectedAddress = state.metamask.selectedAddress || Object.keys(state.metamask.accounts)[0]
+  const selectedAddress = state.metamask.selectedAddress || Object.keys(getMetaMaskAccounts(state))[0]
 
   return selectedAddress
 }
@@ -45,8 +52,27 @@ function getSelectedIdentity (state) {
   return identities[selectedAddress]
 }
 
+function getMetaMaskAccounts (state) {
+  const currentAccounts = state.metamask.accounts
+  const cachedBalances = state.metamask.cachedBalances
+  const selectedAccounts = {}
+
+  Object.keys(currentAccounts).forEach(accountID => {
+    const account = currentAccounts[accountID]
+    if (account && account.balance === null || account.balance === undefined) {
+      selectedAccounts[accountID] = {
+        ...account,
+        balance: cachedBalances[accountID],
+      }
+    } else {
+      selectedAccounts[accountID] = account
+    }
+  })
+  return selectedAccounts
+}
+
 function getSelectedAccount (state) {
-  const accounts = state.metamask.accounts
+  const accounts = getMetaMaskAccounts(state)
   const selectedAddress = getSelectedAddress(state)
 
   return accounts[selectedAddress]
@@ -68,6 +94,18 @@ function getSelectedTokenExchangeRate (state) {
   return contractExchangeRates[address] || 0
 }
 
+function getSelectedTokenAssetImage (state) {
+  const assetImages = state.metamask.assetImages || {}
+  const selectedToken = getSelectedToken(state) || {}
+  const { address } = selectedToken
+  return assetImages[address]
+}
+
+function getAssetImages (state) {
+  const assetImages = state.metamask.assetImages || {}
+  return assetImages
+}
+
 function getTokenExchangeRate (state, address) {
   const contractExchangeRates = state.metamask.contractExchangeRates
   return contractExchangeRates[address] || 0
@@ -82,10 +120,8 @@ function getAddressBook (state) {
 }
 
 function accountsWithSendEtherInfoSelector (state) {
-  const {
-    accounts,
-    identities,
-  } = state.metamask
+  const accounts = getMetaMaskAccounts(state)
+  const { identities } = state.metamask
 
   const accountsWithSendEtherInfo = Object.entries(accounts).map(([key, account]) => {
     return Object.assign({}, account, identities[key])
@@ -101,28 +137,8 @@ function getCurrentAccountWithSendEtherInfo (state) {
   return accounts.find(({ address }) => address === currentAddress)
 }
 
-function transactionsSelector (state) {
-  const { network, selectedTokenAddress } = state.metamask
-  const unapprovedMsgs = valuesFor(state.metamask.unapprovedMsgs)
-  const shapeShiftTxList = (network === '1') ? state.metamask.shapeShiftTxList : undefined
-  const transactions = state.metamask.selectedAddressTxList || []
-  const txsToRender = !shapeShiftTxList ? transactions.concat(unapprovedMsgs) : transactions.concat(unapprovedMsgs, shapeShiftTxList)
-
-  // console.log({txsToRender, selectedTokenAddress})
-  return selectedTokenAddress
-    ? txsToRender
-      .filter(({ txParams }) => txParams && txParams.to === selectedTokenAddress)
-      .sort((a, b) => b.time - a.time)
-    : txsToRender
-      .sort((a, b) => b.time - a.time)
-}
-
-function getGasPrice (state) {
-  return state.metamask.send.gasPrice
-}
-
-function getGasLimit (state) {
-  return state.metamask.send.gasLimit
+function getGasIsLoading (state) {
+  return state.appState.gasIsLoading
 }
 
 function getForceGasMin (state) {
@@ -143,6 +159,10 @@ function getSendMaxModeState (state) {
 
 function getCurrentCurrency (state) {
   return state.metamask.currentCurrency
+}
+
+function getNativeCurrency (state) {
+  return state.metamask.nativeCurrency
 }
 
 function getSelectedTokenToFiatRate (state) {
@@ -171,7 +191,7 @@ function autoAddToBetaUI (state) {
   const autoAddTokensThreshold = 1
 
   const numberOfTransactions = state.metamask.selectedAddressTxList.length
-  const numberOfAccounts = Object.keys(state.metamask.accounts).length
+  const numberOfAccounts = Object.keys(getMetaMaskAccounts(state)).length
   const numberOfTokensAdded = state.metamask.tokens.length
 
   const userPassesThreshold = (numberOfTransactions > autoAddTransactionThreshold) &&
@@ -182,7 +202,30 @@ function autoAddToBetaUI (state) {
   return userIsNotInBeta && userPassesThreshold
 }
 
+function getShouldUseNewUi (state) {
+  const isAlreadyUsingBetaUi = state.metamask.featureFlags.betaUI
+  const isMascara = state.metamask.isMascara
+  const isFreshInstall = Object.keys(state.metamask.identities).length === 0
+  return isAlreadyUsingBetaUi || isMascara || isFreshInstall
+}
+
 function getCurrentViewContext (state) {
   const { currentView = {} } = state.appState
   return currentView.context
+}
+
+function getTotalUnapprovedCount ({ metamask }) {
+  const {
+    unapprovedTxs = {},
+    unapprovedMsgCount,
+    unapprovedPersonalMsgCount,
+    unapprovedTypedMessagesCount,
+  } = metamask
+
+  return Object.keys(unapprovedTxs).length + unapprovedMsgCount + unapprovedPersonalMsgCount +
+    unapprovedTypedMessagesCount
+}
+
+function preferencesSelector ({ metamask }) {
+  return metamask.preferences
 }

@@ -7,6 +7,7 @@ const TESTNET = 'testnet'
 const MAINNET2 = 'mainnet2'
 const LOCALHOST = 'localhost'
 
+const MAINNET_CODE = 1
 const ROPSTEN_CODE = 3
 const RINKEYBY_CODE = 4
 const KOVAN_CODE = 42
@@ -22,7 +23,6 @@ const STAGING_DISPLAY_NAME = 'StagingNet'
 const TESTNET_DISPLAY_NAME = 'TestNet'
 const MAINNET2_DISPLAY_NAME = 'MainNet'
 
-
 module.exports = {
   ROPSTEN,
   RINKEBY,
@@ -32,6 +32,7 @@ module.exports = {
   TESTNET,
   MAINNET2,
   LOCALHOST,
+  MAINNET_CODE,
   ROPSTEN_CODE,
   RINKEYBY_CODE,
   KOVAN_CODE,

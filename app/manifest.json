@@ -52,6 +52,14 @@
       ],
       "run_at": "document_start",
       "all_frames": true
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor/content-script.js"
+      ]
     }
   ],
   "permissions": [
@@ -59,10 +67,14 @@
     "unlimitedStorage",
     "clipboardWrite",
     "http://localhost:8545/",
-    "https://*.cmtwallet.io:8545/"
+    "https://*.cmtwallet.io:8545/",
+    "activeTab",
+    "webRequest",
+    "notifications"
   ],
   "web_accessible_resources": [
-    "inpage.js"
+    "inpage.js",
+    "phishing.html"
   ],
   "externally_connectable": {
     "matches": [

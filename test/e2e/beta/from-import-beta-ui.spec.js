@@ -12,7 +12,7 @@ const {
 } = require('../func')
 const {
   checkBrowserForConsoleErrors,
-  loadExtension,
+  closeAllWindowHandlesExcept,
   verboseReportOnFailure,
   findElement,
   findElements,
@@ -22,25 +22,25 @@ const {
 describe('Using MetaMask with an existing account', function () {
   let extensionId
   let driver
-  let tokenAddress
 
   const testSeedPhrase = 'phrase upgrade clock rough situate wedding elder clever doctor stamp excess tent'
   const testAddress = '0xE18035BF8712672935FDB4e5e431b1a0183d2DFC'
+  const testPrivateKey2 = '14abe6f4aab7f9f626fe981c864d0adeb5685f289ac9270c27b8fd790b4235d6'
   const regularDelayMs = 1000
   const largeDelayMs = regularDelayMs * 2
-  const waitingNewPageDelayMs = regularDelayMs * 10
 
   this.timeout(0)
   this.bail(true)
 
   before(async function () {
+    let extensionUrl
     switch (process.env.SELENIUM_BROWSER) {
       case 'chrome': {
         const extensionPath = path.resolve('dist/chrome')
         driver = buildChromeWebDriver(extensionPath)
         extensionId = await getExtensionIdChrome(driver)
-        await driver.get(`chrome-extension://${extensionId}/popup.html`)
         await delay(regularDelayMs)
+        extensionUrl = `chrome-extension://${extensionId}/home.html`
         break
       }
       case 'firefox': {
@@ -49,11 +49,17 @@ describe('Using MetaMask with an existing account', function () {
         await installWebExt(driver, extensionPath)
         await delay(regularDelayMs)
         extensionId = await getExtensionIdFirefox(driver)
-        await driver.get(`moz-extension://${extensionId}/popup.html`)
-        await delay(regularDelayMs)
+        extensionUrl = `moz-extension://${extensionId}/home.html`
         break
       }
     }
+    // Depending on the state of the application built into the above directory (extPath) and the value of
+    // METAMASK_DEBUG we will see different post-install behaviour and possibly some extra windows. Here we
+    // are closing any extraneous windows to reset us to a single window before continuing.
+    const [tab1] = await driver.getAllWindowHandles()
+    await closeAllWindowHandlesExcept(driver, [tab1])
+    await driver.switchTo().window(tab1)
+    await driver.get(extensionUrl)
   })
 
   afterEach(async function () {
@@ -74,47 +80,13 @@ describe('Using MetaMask with an existing account', function () {
     await driver.quit()
   })
 
-  describe('New UI setup', async function () {
-    it('switches to first tab', async function () {
-      const [firstTab] = await driver.getAllWindowHandles()
-      await driver.switchTo().window(firstTab)
-      await delay(regularDelayMs)
-    })
-
-    it('use the local network', async function () {
-      const networkSelector = await findElement(driver, By.css('#network_component'))
-      await networkSelector.click()
-      await delay(regularDelayMs)
-
-      const [localhost] = await findElements(driver, By.xpath(`//li[contains(text(), 'Localhost')]`))
-      await localhost.click()
-      await delay(regularDelayMs)
-    })
-
-    it('selects the new UI option', async () => {
-      const button = await findElement(driver, By.xpath("//p[contains(text(), 'Try Beta Version')]"))
-      await button.click()
-      await delay(regularDelayMs)
-
-      // Close all other tabs
-      let [oldUi, infoPage, newUi] = await driver.getAllWindowHandles()
-      newUi = newUi || infoPage
-      await driver.switchTo().window(oldUi)
-      await driver.close()
-      if (infoPage !== newUi) {
-        await driver.switchTo().window(infoPage)
-        await driver.close()
-      }
-      await driver.switchTo().window(newUi)
-      await delay(regularDelayMs)
-
-      const continueBtn = await findElement(driver, By.css('.welcome-screen__button'))
-      await continueBtn.click()
-      await delay(regularDelayMs)
-    })
-  })
-
   describe('First time flow starting from an existing seed phrase', () => {
+    it('clicks the continue button on the welcome screen', async () => {
+      const welcomeScreenBtn = await findElement(driver, By.css('.welcome-screen__button'))
+      welcomeScreenBtn.click()
+      await delay(largeDelayMs)
+    })
+
     it('imports a seed phrase', async () => {
       const [seedPhrase] = await findElements(driver, By.xpath(`//a[contains(text(), 'Import with seed phrase')]`))
       await seedPhrase.click()
@@ -136,6 +108,7 @@ describe('Using MetaMask with an existing account', function () {
 
     it('clicks through the ToS', async () => {
       // terms of use
+      await delay(largeDelayMs)
       const canClickThrough = await driver.findElement(By.css('.tou button')).isEnabled()
       assert.equal(canClickThrough, false, 'disabled continue button')
       const bottomOfTos = await findElement(driver, By.linkText('Attributions'))
@@ -166,8 +139,7 @@ describe('Using MetaMask with an existing account', function () {
 
   describe('Show account information', () => {
     it('shows the correct account address', async () => {
-      const detailsButton = await findElement(driver, By.xpath(`//button[contains(text(), 'Details')]`))
-      detailsButton.click()
+      await driver.findElement(By.css('.wallet-view__details-button')).click()
       await driver.findElement(By.css('.qr-wrapper')).isDisplayed()
       await delay(regularDelayMs)
 
@@ -210,6 +182,16 @@ describe('Using MetaMask with an existing account', function () {
   })
 
   describe('Add an account', () => {
+    it('switches to localhost', async () => {
+      const networkDropdown = await findElement(driver, By.css('.network-name'))
+      await networkDropdown.click()
+      await delay(regularDelayMs)
+
+      const [localhost] = await findElements(driver, By.xpath(`//span[contains(text(), 'Localhost')]`))
+      await localhost.click()
+      await delay(largeDelayMs)
+    })
+
     it('choose Create Account from the account menu', async () => {
       await driver.findElement(By.css('.account-menu__icon')).click()
       await delay(regularDelayMs)
@@ -254,7 +236,7 @@ describe('Using MetaMask with an existing account', function () {
       await delay(regularDelayMs)
 
       const inputAddress = await findElement(driver, By.css('input[placeholder="Recipient Address"]'))
-      const inputAmount = await findElement(driver, By.css('.currency-display__input'))
+      const inputAmount = await findElement(driver, By.css('.unit-input__input'))
       await inputAddress.sendKeys('0x2f318C334780961FB129D2a6c30D0763d9a5C970')
       await inputAmount.sendKeys('1')
 
@@ -263,8 +245,10 @@ describe('Using MetaMask with an existing account', function () {
       await configureGas.click()
       await delay(regularDelayMs)
 
+      const gasModal = await driver.findElement(By.css('span .modal'))
       const save = await findElement(driver, By.xpath(`//button[contains(text(), 'Save')]`))
       await save.click()
+      await driver.wait(until.stalenessOf(gasModal))
       await delay(regularDelayMs)
 
       // Continue to next screen
@@ -280,152 +264,66 @@ describe('Using MetaMask with an existing account', function () {
     })
 
     it('finds the transaction in the transactions list', async function () {
-      const transactions = await findElements(driver, By.css('.tx-list-item'))
+      const transactions = await findElements(driver, By.css('.transaction-list-item'))
       assert.equal(transactions.length, 1)
 
-      const txValues = await findElements(driver, By.css('.tx-list-value'))
+      const txValues = await findElements(driver, By.css('.transaction-list-item__amount--primary'))
       assert.equal(txValues.length, 1)
-      assert.equal(await txValues[0].getText(), '1 ETH')
+      assert.ok(/-1\s*ETH/.test(await txValues[0].getText()))
     })
   })
 
-  describe('Send ETH from Faucet', () => {
-    it('starts a send transaction inside Faucet', async () => {
-      await driver.executeScript('window.open("https://faucet.metamask.io")')
-      await delay(waitingNewPageDelayMs)
-
-      const [extension, faucet] = await driver.getAllWindowHandles()
-      await driver.switchTo().window(faucet)
+  describe('Imports an account with private key', () => {
+    it('choose Create Account from the account menu', async () => {
+      await driver.findElement(By.css('.account-menu__icon')).click()
       await delay(regularDelayMs)
 
-      const send1eth = await findElement(driver, By.xpath(`//button[contains(text(), '10 ether')]`), 14000)
-      await send1eth.click()
-      await delay(regularDelayMs)
-
-      await driver.switchTo().window(extension)
-      await loadExtension(driver, extensionId)
-      await delay(regularDelayMs)
-
-      const confirmButton = await findElement(driver, By.xpath(`//button[contains(text(), 'Confirm')]`), 14000)
-      await confirmButton.click()
-      await delay(regularDelayMs)
-
-      await driver.switchTo().window(faucet)
-      await delay(regularDelayMs)
-      await driver.close()
-      await delay(regularDelayMs)
-      await driver.switchTo().window(extension)
-      await delay(regularDelayMs)
-      await loadExtension(driver, extensionId)
-      await delay(regularDelayMs)
-    })
-  })
-
-  describe('Add existing token using search', () => {
-    it('clicks on the Add Token button', async () => {
-      const addToken = await findElement(driver, By.xpath(`//button[contains(text(), 'Add Token')]`))
-      await addToken.click()
+      const [importAccount] = await findElements(driver, By.xpath(`//div[contains(text(), 'Import Account')]`))
+      await importAccount.click()
       await delay(regularDelayMs)
     })
 
-    it('picks an existing token', async () => {
-      const tokenSearch = await findElement(driver, By.css('#search-tokens'))
-      await tokenSearch.sendKeys('BAT')
+    it('enter private key', async () => {
+      const privateKeyInput = await findElement(driver, By.css('#private-key-box'))
+      await privateKeyInput.sendKeys(testPrivateKey2)
       await delay(regularDelayMs)
-
-      const token = await findElement(driver, By.xpath("//span[contains(text(), 'BAT')]"))
-      await token.click()
+      const importButtons = await findElements(driver, By.xpath(`//button[contains(text(), 'Import')]`))
+      await importButtons[0].click()
       await delay(regularDelayMs)
-
-      const nextScreen = await findElement(driver, By.xpath(`//button[contains(text(), 'Next')]`))
-      await nextScreen.click()
-      await delay(regularDelayMs)
-
-      const addTokens = await findElement(driver, By.xpath(`//button[contains(text(), 'Add Tokens')]`))
-      await addTokens.click()
-      await delay(largeDelayMs)
     })
 
-    it('renders the balance for the new token', async () => {
-      const balance = await findElement(driver, By.css('.tx-view .balance-display .token-amount'))
-      await driver.wait(until.elementTextMatches(balance, /^0\s*BAT\s*$/), 10000)
-      const tokenAmount = await balance.getText()
-      assert.ok(/^0\s*BAT\s*$/.test(tokenAmount))
+    it('should show the correct account name', async () => {
+      const [accountName] = await findElements(driver, By.css('.account-name'))
+      assert.equal(await accountName.getText(), 'Account 3')
+      await delay(regularDelayMs)
+    })
+
+    it('should show the imported label', async () => {
+      const [importedLabel] = await findElements(driver, By.css('.wallet-view__keyring-label'))
+      assert.equal(await importedLabel.getText(), 'IMPORTED')
       await delay(regularDelayMs)
     })
   })
 
-  describe('Add a custom token from TokenFactory', () => {
-    it('creates a new token', async () => {
-      await driver.executeScript('window.open("https://tokenfactory.surge.sh/#/factory")')
-      await delay(waitingNewPageDelayMs)
-
-      const [extension, tokenFactory] = await driver.getAllWindowHandles()
-      await driver.switchTo().window(tokenFactory)
-      const [
-        totalSupply,
-        tokenName,
-        tokenDecimal,
-        tokenSymbol,
-      ] = await findElements(driver, By.css('.form-control'))
-
-      await totalSupply.sendKeys('100')
-      await tokenName.sendKeys('Test')
-      await tokenDecimal.sendKeys('0')
-      await tokenSymbol.sendKeys('TST')
-
-      const createToken = await findElement(driver, By.xpath(`//button[contains(text(), 'Create Token')]`))
-      await createToken.click()
+  describe('Connects to a Hardware wallet', () => {
+    it('choose Connect Hardware Wallet from the account menu', async () => {
+      await driver.findElement(By.css('.account-menu__icon')).click()
       await delay(regularDelayMs)
 
-      await driver.switchTo().window(extension)
-      await loadExtension(driver, extensionId)
-      await delay(regularDelayMs)
-
-      const confirmButton = await findElement(driver, By.xpath(`//button[contains(text(), 'Confirm')]`))
-      await confirmButton.click()
-      await delay(regularDelayMs)
-
-      await driver.switchTo().window(tokenFactory)
-      await delay(regularDelayMs)
-      const tokenContactAddress = await driver.findElement(By.css('div > div > div:nth-child(2) > span:nth-child(3)'))
-      tokenAddress = await tokenContactAddress.getText()
-      await driver.close()
-      await driver.switchTo().window(extension)
-      await loadExtension(driver, extensionId)
+      const [connectAccount] = await findElements(driver, By.xpath(`//div[contains(text(), 'Connect Hardware Wallet')]`))
+      await connectAccount.click()
       await delay(regularDelayMs)
     })
 
-    it('clicks on the Add Token button', async () => {
-      const addToken = await findElement(driver, By.xpath(`//button[contains(text(), 'Add Token')]`))
-      await addToken.click()
+    it('should open the TREZOR Connect popup', async () => {
+      const trezorButton = await findElements(driver, By.css('.hw-connect__btn'))
+      await trezorButton[1].click()
       await delay(regularDelayMs)
-    })
-
-    it('picks the new Test token', async () => {
-      const addCustomToken = await findElement(driver, By.xpath("//div[contains(text(), 'Custom Token')]"))
-      await addCustomToken.click()
+      const connectButtons = await findElements(driver, By.xpath(`//button[contains(text(), 'Connect')]`))
+      await connectButtons[0].click()
       await delay(regularDelayMs)
-
-      const newTokenAddress = await findElement(driver, By.css('#custom-address'))
-      await newTokenAddress.sendKeys(tokenAddress)
-      await delay(regularDelayMs)
-
-      const nextScreen = await findElement(driver, By.xpath(`//button[contains(text(), 'Next')]`))
-      await nextScreen.click()
-      await delay(regularDelayMs)
-
-      const addTokens = await findElement(driver, By.xpath(`//button[contains(text(), 'Add Tokens')]`))
-      await addTokens.click()
-      await delay(regularDelayMs)
-    })
-
-    it('renders the balance for the new token', async () => {
-      const balance = await findElement(driver, By.css('.tx-view .balance-display .token-amount'))
-      await driver.wait(until.elementTextMatches(balance, /^100\s*TST\s*$/), 10000)
-      const tokenAmount = await balance.getText()
-      assert.ok(/^100\s*TST\s*$/.test(tokenAmount))
-      await delay(regularDelayMs)
+      const allWindows = await driver.getAllWindowHandles()
+      assert.equal(allWindows.length, 2)
     })
   })
 })

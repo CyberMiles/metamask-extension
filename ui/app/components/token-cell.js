@@ -2,7 +2,7 @@ const Component = require('react').Component
 const h = require('react-hyperscript')
 const inherits = require('util').inherits
 const connect = require('react-redux').connect
-const Identicon = require('./identicon')
+import Identicon from './identicon'
 const prefixForNetwork = require('../../lib/etherscan-prefix-for-network')
 const selectors = require('../selectors')
 const actions = require('../actions')
@@ -18,7 +18,7 @@ function mapStateToProps (state) {
     userAddress: selectors.getSelectedAddress(state),
     contractExchangeRates: state.metamask.contractExchangeRates,
     conversionRate: state.metamask.conversionRate,
-    sidebarOpen: state.appState.sidebarOpen,
+    sidebarOpen: state.appState.sidebar.isOpen,
   }
 }
 
@@ -56,8 +56,8 @@ TokenCell.prototype.render = function () {
     sidebarOpen,
     currentCurrency,
     // userAddress,
+    image,
   } = props
-
   let currentTokenToFiatRate
   let currentTokenInFiat
   let formattedFiat = ''
@@ -97,6 +97,7 @@ TokenCell.prototype.render = function () {
         diameter: 50,
         address,
         network,
+        image,
       }),
 
       h('div.token-list-item__balance-ellipsis', null, [

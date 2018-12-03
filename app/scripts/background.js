@@ -2,6 +2,9 @@
  * @file The entry point for the web extension singleton process.
  */
 
+// this needs to run before anything else
+require('./lib/setupFetchDebugging')()
+
 const urlUtil = require('url')
 const endOfStream = require('end-of-stream')
 const pump = require('pump')
@@ -15,22 +18,27 @@ const asStream = require('obs-store/lib/asStream')
 const ExtensionPlatform = require('./platforms/extension')
 const Migrator = require('./lib/migrator/')
 const migrations = require('./migrations/')
-const PortStream = require('./lib/port-stream.js')
+const PortStream = require('extension-port-stream')
 const createStreamSink = require('./lib/createStreamSink')
 const NotificationManager = require('./lib/notification-manager.js')
 const MetamaskController = require('./metamask-controller')
-const firstTimeState = require('./first-time-state')
-const setupRaven = require('./lib/setupRaven')
+const rawFirstTimeState = require('./first-time-state')
+const setupSentry = require('./lib/setupSentry')
 const reportFailedTxToSentry = require('./lib/reportFailedTxToSentry')
 const setupMetamaskMeshMetrics = require('./lib/setupMetamaskMeshMetrics')
 const EdgeEncryptor = require('./edge-encryptor')
 const getFirstPreferredLangCode = require('./lib/get-first-preferred-lang-code')
 const getObjStructure = require('./lib/getObjStructure')
+const setupEnsIpfsResolver = require('./lib/ens-ipfs/setup')
+
 const {
   ENVIRONMENT_TYPE_POPUP,
   ENVIRONMENT_TYPE_NOTIFICATION,
   ENVIRONMENT_TYPE_FULLSCREEN,
 } = require('./lib/enums')
+
+// METAMASK_TEST_CONFIG is used in e2e tests to set the default network to localhost
+const firstTimeState = Object.assign({}, rawFirstTimeState, global.METAMASK_TEST_CONFIG)
 
 const STORAGE_KEY = 'metamask-config'
 const METAMASK_DEBUG = process.env.METAMASK_DEBUG
@@ -43,7 +51,7 @@ global.METAMASK_NOTIFIER = notificationManager
 
 // setup sentry error reporting
 const release = platform.getVersion()
-const raven = setupRaven({ release })
+const sentry = setupSentry({ release })
 
 // browser check if it is Edge - https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
 // Internet Explorer 6-11
@@ -65,6 +73,7 @@ initialize().catch(log.error)
 
 // setup metamask mesh testing container
 setupMetamaskMeshMetrics()
+
 
 /**
  * An object representing a transaction, in whatever state it is in.
@@ -187,14 +196,14 @@ async function loadStateFromPersistence () {
       // we were able to recover (though it might be old)
       versionedData = diskStoreState
       const vaultStructure = getObjStructure(versionedData)
-      raven.captureMessage('MetaMask - Empty vault found - recovered from diskStore', {
+      sentry.captureMessage('MetaMask - Empty vault found - recovered from diskStore', {
         // "extra" key is required by Sentry
         extra: { vaultStructure },
       })
     } else {
       // unable to recover, clear state
       versionedData = migrator.generateInitialState(firstTimeState)
-      raven.captureMessage('MetaMask - Empty vault found - unable to recover')
+      sentry.captureMessage('MetaMask - Empty vault found - unable to recover')
     }
   }
 
@@ -202,7 +211,7 @@ async function loadStateFromPersistence () {
   migrator.on('error', (err) => {
     // get vault structure without secrets
     const vaultStructure = getObjStructure(versionedData)
-    raven.captureException(err, {
+    sentry.captureException(err, {
       // "extra" key is required by Sentry
       extra: { vaultStructure },
     })
@@ -248,6 +257,8 @@ function setupController (initState, initLangCode) {
     showUnconfirmedMessage: triggerUi,
     unlockAccountMessage: triggerUi,
     showUnapprovedTx: triggerUi,
+    openPopup: openPopup,
+    closePopup: notificationManager.closePopup.bind(notificationManager),
     // initial state
     initState,
     // initial locale code
@@ -256,14 +267,16 @@ function setupController (initState, initLangCode) {
     platform,
     encryptor: isEdge ? new EdgeEncryptor() : undefined,
   })
-  global.metamaskController = controller
+
+  const provider = controller.provider
+  setupEnsIpfsResolver({ provider })
 
   // report failed transactions to Sentry
   controller.txController.on(`tx:status-update`, (txId, status) => {
     if (status !== 'failed') return
     const txMeta = controller.txController.txStateManager.getTx(txId)
     try {
-      reportFailedTxToSentry({ raven, txMeta })
+      reportFailedTxToSentry({ sentry, txMeta })
     } catch (e) {
       console.error(e)
     }
@@ -319,6 +332,10 @@ function setupController (initState, initLangCode) {
     [ENVIRONMENT_TYPE_FULLSCREEN]: true,
   }
 
+  const metamaskBlacklistedPorts = [
+    'trezor-connect',
+  ]
+
   const isClientOpenStatus = () => {
     return popupIsOpen || Boolean(Object.keys(openMetamaskTabsIDs).length) || notificationIsOpen
   }
@@ -338,6 +355,10 @@ function setupController (initState, initLangCode) {
   function connectRemote (remotePort) {
     const processName = remotePort.name
     const isMetaMaskInternalProcess = metamaskInternalProcessHash[processName]
+
+    if (metamaskBlacklistedPorts.includes(remotePort.name)) {
+      return false
+    }
 
     if (isMetaMaskInternalProcess) {
       const portStream = new PortStream(remotePort)
@@ -378,7 +399,7 @@ function setupController (initState, initLangCode) {
   }
 
   // communication with page or other extension
-  function connectExternal(remotePort) {
+  function connectExternal (remotePort) {
     const originDomain = urlUtil.parse(remotePort.sender.url).hostname
     const portStream = new PortStream(remotePort)
     controller.setupUntrustedCommunication(portStream, originDomain)
@@ -392,6 +413,8 @@ function setupController (initState, initLangCode) {
   controller.txController.on('update:badge', updateBadge)
   controller.messageManager.on('updateBadge', updateBadge)
   controller.personalMessageManager.on('updateBadge', updateBadge)
+  controller.typedMessageManager.on('updateBadge', updateBadge)
+  controller.providerApprovalController.store.on('update', updateBadge)
 
   /**
    * Updates the Web Extension's "badge" number, on the little fox in the toolbar.
@@ -403,7 +426,8 @@ function setupController (initState, initLangCode) {
     var unapprovedMsgCount = controller.messageManager.unapprovedMsgCount
     var unapprovedPersonalMsgs = controller.personalMessageManager.unapprovedPersonalMsgCount
     var unapprovedTypedMsgs = controller.typedMessageManager.unapprovedTypedMessagesCount
-    var count = unapprovedTxCount + unapprovedMsgCount + unapprovedPersonalMsgs + unapprovedTypedMsgs
+    const pendingProviderRequests = controller.providerApprovalController.store.getState().providerRequests.length
+    var count = unapprovedTxCount + unapprovedMsgCount + unapprovedPersonalMsgs + unapprovedTypedMsgs + pendingProviderRequests
     if (count) {
       label = String(count)
     }
@@ -426,13 +450,32 @@ function triggerUi () {
     const currentlyActiveMetamaskTab = Boolean(tabs.find(tab => openMetamaskTabsIDs[tab.id]))
     if (!popupIsOpen && !currentlyActiveMetamaskTab && !notificationIsOpen) {
       notificationManager.showPopup()
+      notificationIsOpen = true
     }
   })
 }
 
-// On first install, open a window to MetaMask website to how-it-works.
-extension.runtime.onInstalled.addListener(function (details) {
-  if ((details.reason === 'install') && (!METAMASK_DEBUG)) {
-    // extension.tabs.create({url: 'https://metamask.io/#how-it-works'})
+/**
+ * Opens the browser popup for user confirmation of watchAsset
+ * then it waits until user interact with the UI
+ */
+function openPopup () {
+  triggerUi()
+  return new Promise(
+    (resolve) => {
+      var interval = setInterval(() => {
+        if (!notificationIsOpen) {
+          clearInterval(interval)
+          resolve()
+        }
+      }, 1000)
+    }
+  )
+}
+
+// On first install, open a new tab with MetaMask
+extension.runtime.onInstalled.addListener(({reason}) => {
+  if ((reason === 'install') && (!METAMASK_DEBUG)) {
+    // platform.openExtensionInBrowser()
   }
 })

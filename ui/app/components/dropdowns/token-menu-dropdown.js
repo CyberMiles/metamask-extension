@@ -4,8 +4,8 @@ const h = require('react-hyperscript')
 const inherits = require('util').inherits
 const connect = require('react-redux').connect
 const actions = require('../../actions')
-const genAccountLink = require('etherscan-link').createAccountLink
-const copyToClipboard = require('copy-to-clipboard')
+// const genAccountLink = require('etherscan-link').createAccountLink
+const genAccountLink = require('../../../lib/account-link.js')
 const { Menu, Item, CloseArea } = require('./components/menu')
 
 TokenMenuDropdown.contextTypes = {
@@ -54,15 +54,7 @@ TokenMenuDropdown.prototype.render = function () {
         showHideTokenConfirmationModal(this.props.token)
         this.props.onClose()
       },
-      text: this.context.t('hideToken'), 
-    }),
-    h(Item, {
-      onClick: (e) => {
-        e.stopPropagation()
-        copyToClipboard(this.props.token.address)
-        this.props.onClose()
-      },
-      text: this.context.t('copyContractAddress'), 
+      text: this.context.t('hideToken'),
     }),
     h(Item, {
       onClick: (e) => {
@@ -71,7 +63,7 @@ TokenMenuDropdown.prototype.render = function () {
         global.platform.openWindow({ url })
         this.props.onClose()
       },
-      text: this.context.t('viewOnEtherscan'), 
+      text: this.context.t('viewOnEtherscan'),
     }),
   ])
 }

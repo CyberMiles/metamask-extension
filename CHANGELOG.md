@@ -1,6 +1,150 @@
 # Changelog
 
-## Current Master
+## Current Develop Branch
+
+## 5.0.4 Thu Nov 29 2018
+
+- [#5840](https://github.com/MetaMask/metamask-extension/pull/5840): transactions/tx-gas-utils - add the acctual response for eth_getCode for NO_CONTRACT_ERROR's && add a debug object to simulationFailed
+- [#5848](https://github.com/MetaMask/metamask-extension/pull/5848): Soften accusatory language on phishing warning
+- [#5835](https://github.com/MetaMask/metamask-extension/pull/5835): Open full-screen UI on install
+- Locked versions for some dependencies to avoid possible issues from event-stream hack.
+- [#5831](https://github.com/MetaMask/metamask-extension/pull/5831): Hide app-header when provider request pending
+- [#5786](https://github.com/MetaMask/metamask-extension/pull/5786): * transactions - autofill gasPrice for retry attempts with either the recomened gasprice or a %10 bump
+- [#5801](https://github.com/MetaMask/metamask-extension/pull/5801): transactions - ensure err is defined when setting tx failed
+- [#5792](https://github.com/MetaMask/metamask-extension/pull/5792): Consider HW Wallets for signTypedMessage
+- [#5829](https://github.com/MetaMask/metamask-extension/pull/5829): Show disabled cursor in .network-disabled state
+- [#5827](https://github.com/MetaMask/metamask-extension/pull/5827): Trim whitespace from seed phrase during import
+- [#5832](https://github.com/MetaMask/metamask-extension/pull/5832): Show Connect Requests count in extension badge
+- [#5816](https://github.com/MetaMask/metamask-extension/pull/5816): Increase Token Symbol length to twelve
+- [#5819](https://github.com/MetaMask/metamask-extension/pull/5819): With the EIP 1102 updates, MetaMask *does* now open itself when visiting some websites. Changed the wording here to clarify that MetaMask will not open itself to ask you for your seed phrase.
+- [#5810](https://github.com/MetaMask/metamask-extension/pull/5810): Bump Node version to 8.13
+- [#5797](https://github.com/MetaMask/metamask-extension/pull/5797): Add Firefox and Brave support for Trezor
+- [#5799](https://github.com/MetaMask/metamask-extension/pull/5799): Fix usage of setState in ConfirmTransactionBase#handleSubmit
+- [#5798](https://github.com/MetaMask/metamask-extension/pull/5798): Show byte count for hex data on confirm screen
+- [#5334](https://github.com/MetaMask/metamask-extension/pull/5334): Default to the new UI for first time users
+- [#5791](https://github.com/MetaMask/metamask-extension/pull/5791): Bump eth-ledger-bridge-keyring
+
+## 5.0.3 Mon Nov 19 2018
+
+- [#5547](https://github.com/MetaMask/metamask-extension/pull/5547): Bundle some ui dependencies separately to limit the build size of ui.js
+- Resubmit approved transactions on new block, to fix bug where an error can stick transactions in this state.
+- Fixed a bug that could cause an error when sending the max number of tokens.
+
+## 5.0.2 Friday November 9 2018
+
+- Fixed bug that caused accounts to update slowly to sites. #5717
+- Fixed bug that could lead to some sites crashing. #5709
+
+## 5.0.1 Wednesday November 7 2018
+
+- Fixed bug in privacy mode that made it not work correctly on Firefox.
+
+## 5.0.0 Tuesday November 6 2018
+
+- Implements EIP 1102 as a user-activated "Privacy Mode".
+
+## 4.17.1 Saturday November 3 2018
+
+- Revert chain ID lookup change which introduced a bug which caused problems when connecting to mainnet via Infura's RESTful API.
+
+## 4.17.0 Thursday November 1 2018
+
+- Fix bug where data lookups like balances would get stale data (stopped block-tracker bug)
+- Transaction Details now show entry for onchain failure
+- [#5559](https://github.com/MetaMask/metamask-extension/pull/5559) Localize language names in translation select list
+- [#5283](https://github.com/MetaMask/metamask-extension/pull/5283): Fix bug when eth.getCode() called with no contract
+- [#5563](https://github.com/MetaMask/metamask-extension/pull/5563#pullrequestreview-166769174) Feature: improve Hatian Creole translations
+- Feature: improve Slovenian translations
+- Add support for alternate `wallet_watchAsset` rpc method name
+- Attempt chain ID lookup via `eth_chainId` before `net_version`
+- Fix account display width for large currency values
+
+## 4.16.0 Wednesday October 17 2018
+
+- Feature: Add toggle for primary currency (eth/fiat)
+- Feature: add tooltip for view etherscan tx
+- Feature: add Polish translations
+- Feature: improve Korean translations
+- Feature: improve Italian translations
+- Bug Fix: Fix bug with "pending" block reference
+- Bug Fix: Force AccountTracker to update balances on network change
+- Bug Fix: Fix document extension check when injecting web3
+- Bug Fix: Fix some support links
+
+## 4.15.0 Thursday October 11 2018
+
+- A rollback release, equivalent to `v4.11.1` to be deployed in the case that `v4.14.0` is found to have bugs.
+
+## 4.14.0 Thursday October 11 2018
+
+- Update transaction statuses when switching networks.
+- [#5470](https://github.com/MetaMask/metamask-extension/pull/5470) 100% coverage in French locale, fixed the procedure to verify proposed locale.
+- Added rudimentary support for the subscription API to support web3 1.0 and Truffle's Drizzle.
+- [#5502](https://github.com/MetaMask/metamask-extension/pull/5502) Update Italian translation.
+
+## 4.13.0
+
+- A rollback release, equivalent to `v4.11.1` to be deployed in the case that `v4.12.0` is found to have bugs.
+
+## 4.12.0 Thursday September 27 2018
+
+- Reintroduces changes from 4.10.0
+
+## 4.11.1 Tuesday September 25 2018
+
+- Adds Ledger support.
+
+## 4.11.0 Monday September 24 2018
+
+- Identical to 4.9.3. A rollback version to give time to fix bugs in the 4.10.x branch.
+
+## 4.10.0 Mon Sep 17 2018
+
+- [#4803](https://github.com/MetaMask/metamask-extension/pull/4803): Implement EIP-712: Sign typed data, but continue to support v1.
+- [#4898](https://github.com/MetaMask/metamask-extension/pull/4898): Restore multiple consecutive accounts with balances.
+- [#4279](https://github.com/MetaMask/metamask-extension/pull/4279): New BlockTracker and Json-Rpc-Engine based Provider.
+- [#5050](https://github.com/MetaMask/metamask-extension/pull/5050): Add Ledger hardware wallet support.
+- [#4919](https://github.com/MetaMask/metamask-extension/pull/4919): Refactor and Redesign Transaction List.
+- [#5182](https://github.com/MetaMask/metamask-extension/pull/5182): Add Transaction Details to the Transaction List view.
+- [#5229](https://github.com/MetaMask/metamask-extension/pull/5229): Clear old seed words when importing new seed words.
+- [#5264](https://github.com/MetaMask/metamask-extension/pull/5264): Improve click area for adjustment arrows buttons.
+- [#4606](https://github.com/MetaMask/metamask-extension/pull/4606): Add new metamask_watchAsset method.
+- [#5189](https://github.com/MetaMask/metamask-extension/pull/5189): Fix bug where Ropsten loading message is shown when connecting to Kovan.
+- [#5256](https://github.com/MetaMask/metamask-extension/pull/5256): Add mock EIP-1102 support
+
+## 4.9.3 Wed Aug 15 2018
+
+- [#4897](https://github.com/MetaMask/metamask-extension/pull/4897): QR code scan for recipient addresses.
+- [#4961](https://github.com/MetaMask/metamask-extension/pull/4961): Add a download seed phrase link.
+- [#5060](https://github.com/MetaMask/metamask-extension/pull/5060): Fix bug where gas was not updating properly.
+
+## 4.9.2 Mon Aug 09 2018
+
+- [#5020](https://github.com/MetaMask/metamask-extension/pull/5020): Fix bug in migration #28 ( moving tokens to specific accounts )
+
+## 4.9.1 Mon Aug 09 2018
+
+- [#4884](https://github.com/MetaMask/metamask-extension/pull/4884): Allow to have tokens per account and network.
+- [#4989](https://github.com/MetaMask/metamask-extension/pull/4989): Continue to use original signedTypedData.
+- [#5010](https://github.com/MetaMask/metamask-extension/pull/5010): Fix ENS resolution issues.
+- [#5000](https://github.com/MetaMask/metamask-extension/pull/5000): Show error while allowing confirmation of tx where simulation fails.
+- [#4995](https://github.com/MetaMask/metamask-extension/pull/4995): Shows retry button on dApp initialized transactions.
+
+## 4.9.0 Mon Aug 07 2018
+
+- [#4926](https://github.com/MetaMask/metamask-extension/pull/4926): Show retry button on the latest tx of the earliest nonce.
+- [#4888](https://github.com/MetaMask/metamask-extension/pull/4888): Suggest using the new user interface.
+- [#4947](https://github.com/MetaMask/metamask-extension/pull/4947): Prevent sending multiple transasctions on multiple confirm clicks.
+- [#4844](https://github.com/MetaMask/metamask-extension/pull/4844): Add new tokens auto detection.
+- [#4667](https://github.com/MetaMask/metamask-extension/pull/4667): Remove rejected transactions from transaction history.
+- [#4625](https://github.com/MetaMask/metamask-extension/pull/4625): Add Trezor Support.
+- [#4625](https://github.com/MetaMask/metamask-extension/pull/4625/commits/523cf9ad33d88719520ae5e7293329d133b64d4d): Allow to remove accounts (Imported and Hardware Wallets)
+- [#4814](https://github.com/MetaMask/metamask-extension/pull/4814): Add hex data input to send screen.
+- [#4691](https://github.com/MetaMask/metamask-extension/pull/4691): Redesign of the Confirm Transaction Screen.
+- [#4840](https://github.com/MetaMask/metamask-extension/pull/4840): Now shows notifications when transactions are completed.
+- [#4855](https://github.com/MetaMask/metamask-extension/pull/4855): Allow the use of HTTP prefix for custom rpc urls.
+- [#4855](https://github.com/MetaMask/metamask-extension/pull/4855): network.js: convert rpc protocol to lower case.
+- [#4898](https://github.com/MetaMask/metamask-extension/pull/4898): Restore multiple consecutive accounts with balances.
 
 ## 4.8.0 Thur Jun 14 2018
 
@@ -48,6 +192,7 @@
 - Font weight changed from 300 to 400.
 - New reveal screen design.
 - Styling improvements to labels in first time flow and signature request headers.
+- Allow other extensions to make access our ethereum provider API ([#3997](https://github.com/MetaMask/metamask-extension/pull/3997))
 
 ## 4.6.1 Mon Apr 30 2018
 

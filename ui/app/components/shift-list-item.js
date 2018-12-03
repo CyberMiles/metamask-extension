@@ -35,12 +35,13 @@ function ShiftListItem () {
 }
 
 ShiftListItem.prototype.render = function () {
-  return h('div.tx-list-item.tx-list-clickable', {
+  return h('div.transaction-list-item.tx-list-clickable', {
     style: {
       paddingTop: '20px',
       paddingBottom: '20px',
       justifyContent: 'space-around',
       alignItems: 'center',
+      flexDirection: 'row',
     },
   }, [
     h('div', {
@@ -51,12 +52,12 @@ ShiftListItem.prototype.render = function () {
       },
     }, [
       h('img', {
-        src: 'https://info.shapeshift.io/sites/default/files/logo.png',
+        src: 'https://shapeshift.io/logo.png',
         style: {
           height: '35px',
           width: '132px',
           position: 'absolute',
-          clip: 'rect(0px,23px,34px,0px)',
+          clip: 'rect(0px,30px,34px,0px)',
         },
       }),
     ]),
@@ -131,7 +132,6 @@ ShiftListItem.prototype.renderInfo = function () {
     case 'no_deposits':
       return h('.flex-column', {
         style: {
-          width: '200px',
           overflow: 'hidden',
         },
       }, [

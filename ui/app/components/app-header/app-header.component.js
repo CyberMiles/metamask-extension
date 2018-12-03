@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { matchPath } from 'react-router-dom'
+import Identicon from '../identicon'
 
 const {
   ENVIRONMENT_TYPE_NOTIFICATION,
   ENVIRONMENT_TYPE_POPUP,
 } = require('../../../../app/scripts/lib/enums')
 const { DEFAULT_ROUTE, INITIALIZE_ROUTE, CONFIRM_TRANSACTION_ROUTE } = require('../../routes')
-const Identicon = require('../identicon')
 const NetworkIndicator = require('../network')
 
-class AppHeader extends Component {
+export default class AppHeader extends PureComponent {
   static propTypes = {
     history: PropTypes.object,
     location: PropTypes.object,
@@ -23,6 +23,7 @@ class AppHeader extends Component {
     toggleAccountMenu: PropTypes.func,
     selectedAddress: PropTypes.string,
     isUnlocked: PropTypes.bool,
+    providerRequests: PropTypes.array,
   }
 
   static contextTypes = {
@@ -40,12 +41,23 @@ class AppHeader extends Component {
       : hideNetworkDropdown()
   }
 
+  /**
+   * Returns whether or not the user is in the middle of a confirmation prompt
+   *
+   * This accounts for both tx confirmations as well as provider approvals
+   *
+   * @returns {boolean}
+   */
   isConfirming () {
-    const { location } = this.props
+    const { location, providerRequests } = this.props
+    const confirmTxRouteMatch = matchPath(location.pathname, {
+      exact: false,
+      path: CONFIRM_TRANSACTION_ROUTE,
+    })
+    const isConfirmingTx = Boolean(confirmTxRouteMatch)
+    const hasPendingProviderApprovals = Array.isArray(providerRequests) && providerRequests.length > 0
 
-    return Boolean(matchPath(location.pathname, {
-      path: CONFIRM_TRANSACTION_ROUTE, exact: false,
-    }))
+    return isConfirmingTx || hasPendingProviderApprovals
   }
 
   renderAccountMenu () {
@@ -91,7 +103,6 @@ class AppHeader extends Component {
       network,
       provider,
       history,
-      location,
       isUnlocked,
     } = this.props
 
@@ -108,25 +119,24 @@ class AppHeader extends Component {
             onClick={() => history.push(DEFAULT_ROUTE)}
           >
             <img
-              className="app-header__metafox"
-              src="/images/metamask-fox.svg"
+              className="app-header__metafox-logo app-header__metafox-logo--horizontal"
+              src="/images/logo/metamask-logo-horizontal.svg"
+              height={30}
+            />
+            <img
+              className="app-header__metafox-logo app-header__metafox-logo--icon"
+              src="/images/logo/metamask-fox.svg"
               height={42}
               width={42}
             />
-            <div className="flex-row">
-              <h1>{ this.context.t('appName') }</h1>
-              <div className="app-header__beta-label">
-                { this.context.t('beta') }
-              </div>
-            </div>
           </div>
           <div className="app-header__account-menu-container">
-            <div className="network-component-wrapper">
+            <div className="app-header__network-component-wrapper">
               <NetworkIndicator
                 network={network}
                 provider={provider}
                 onClick={event => this.handleNetworkIndicatorClick(event)}
-                disabled={location.pathname === CONFIRM_TRANSACTION_ROUTE}
+                disabled={this.isConfirming()}
               />
             </div>
             { this.renderAccountMenu() }
@@ -136,5 +146,3 @@ class AppHeader extends Component {
     )
   }
 }
-
-export default AppHeader

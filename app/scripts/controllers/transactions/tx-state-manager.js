@@ -1,5 +1,5 @@
 const extend = require('xtend')
-const EventEmitter = require('events')
+const EventEmitter = require('safe-event-emitter')
 const ObservableStore = require('obs-store')
 const ethUtil = require('ethereumjs-util')
 const log = require('loglevel')
@@ -79,6 +79,17 @@ class TransactionStateManager extends EventEmitter {
       result[tx.id] = tx
       return result
     }, {})
+  }
+
+  /**
+    @param [address] {string} - hex prefixed address to sort the txMetas for [optional]
+    @returns {array} the tx list whos status is approved if no address is provide
+    returns all txMetas who's status is approved for the current network
+  */
+  getApprovedTransactions (address) {
+    const opts = { status: 'approved' }
+    if (address) opts.from = address
+    return this.getFilteredTxList(opts)
   }
 
   /**
@@ -288,6 +299,7 @@ class TransactionStateManager extends EventEmitter {
   */
   setTxStatusRejected (txId) {
     this._setTxStatus(txId, 'rejected')
+    this._removeTx(txId)
   }
 
   /**
@@ -349,12 +361,15 @@ class TransactionStateManager extends EventEmitter {
     @param err {erroObject} - error object
   */
   setTxStatusFailed (txId, err) {
+    const error = !err ? new Error('Internal metamask failure') : err
+
     const txMeta = this.getTx(txId)
     txMeta.err = {
-      message: err.toString(),
-      stack: err.stack,
+      message: error.toString(),
+      rpc: error.value,
+      stack: error.stack,
     }
-    this.updateTx(txMeta)
+    this.updateTx(txMeta, 'transactions:tx-state-manager#fail - add error')
     this._setTxStatus(txId, 'failed')
   }
 
@@ -398,6 +413,11 @@ class TransactionStateManager extends EventEmitter {
   */
   _setTxStatus (txId, status) {
     const txMeta = this.getTx(txId)
+
+    if (!txMeta) {
+      return
+    }
+
     txMeta.status = status
     setTimeout(() => {
       try {
@@ -421,6 +441,11 @@ class TransactionStateManager extends EventEmitter {
   // Function is intended only for internal use
   _saveTxList (transactions) {
     this.store.updateState({ transactions })
+  }
+
+  _removeTx (txId) {
+    const transactionList = this.getFullTxList()
+    this._saveTxList(transactionList.filter((txMeta) => txMeta.id !== txId))
   }
 }
 

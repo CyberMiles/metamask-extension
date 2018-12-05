@@ -88,18 +88,6 @@ module.exports = class AppBar extends Component {
         }, [
           'Now',
         ]),
-        AppBar.renderSpace(),
-        'or',
-        AppBar.renderSpace(),
-        h('span.banner__link', {
-          onClick () {
-            global.platform.openWindow({
-              url: 'https://medium.com/metamask/74dba32cc7f7',
-            })
-          },
-        }, [
-          'Learn More',
-        ]),
       ])
     )
   }

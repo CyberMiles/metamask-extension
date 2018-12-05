@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+// const fs = require('fs')
+// const path = require('path')
 const pump = require('pump')
 const querystring = require('querystring')
 const LocalMessageDuplexStream = require('post-message-stream')
@@ -9,9 +9,9 @@ const extension = require('extensionizer')
 const PortStream = require('extension-port-stream')
 const TransformStream = require('stream').Transform
 
-const inpageContent = fs.readFileSync(path.join(__dirname, '..', '..', 'dist', 'chrome', 'inpage.js')).toString()
-const inpageSuffix = '//# sourceURL=' + extension.extension.getURL('inpage.js') + '\n'
-const inpageBundle = inpageContent + inpageSuffix
+// const inpageContent = fs.readFileSync(path.join(__dirname, '..', '..', 'dist', 'chrome', 'inpage.js')).toString()
+// const inpageSuffix = '//# sourceURL=' + extension.extension.getURL('inpage.js') + '\n'
+// const inpageBundle = inpageContent + inpageSuffix
 let isEnabled = false
 
 // Eventually this streaming injection could be replaced with:
@@ -22,7 +22,7 @@ let isEnabled = false
 // MetaMask will be much faster loading and performant on Firefox.
 
 if (shouldInjectWeb3()) {
-  injectScript(inpageBundle)
+  injectScript()
   setupStreams()
   listenForProviderRequest()
   checkPrivacyMode()
@@ -33,12 +33,13 @@ if (shouldInjectWeb3()) {
  *
  * @param {string} content - Code to be executed in the current document
  */
-function injectScript (content) {
+function injectScript () {
   try {
     const container = document.head || document.documentElement
     const scriptTag = document.createElement('script')
     scriptTag.setAttribute('async', false)
-    scriptTag.textContent = content
+    // scriptTag.textContent = content
+    scriptTag.src = extension.extension.getURL('inpage.js')
     container.insertBefore(scriptTag, container.children[0])
     container.removeChild(scriptTag)
   } catch (e) {

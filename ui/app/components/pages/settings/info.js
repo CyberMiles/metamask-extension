@@ -81,7 +81,7 @@ class Info extends Component {
           h('div.settings__content-item.settings__content-item--without-height', [
             this.renderLogo(),
             h('div.settings__info-item', [
-              h('div.settings__info-version-header', 'MetaMask for CMT'),
+              h('div.settings__info-version-header', 'Venus'),
               h('div.settings__info-version-number', `Version: ${this.state.version}`),
             ]),
           ]),

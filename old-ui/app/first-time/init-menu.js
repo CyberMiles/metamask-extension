@@ -55,7 +55,7 @@ InitializeMenuScreen.prototype.renderMenu = function (state) {
           color: '#7F8082',
           marginBottom: 10,
         },
-      }, 'MetaMask for CMT'),
+      }, 'Venus'),
 
 
       h('div', [

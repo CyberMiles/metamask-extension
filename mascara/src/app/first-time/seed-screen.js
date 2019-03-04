@@ -69,7 +69,7 @@ class BackupPhraseScreen extends Component {
   exportSeedWords = () => {
     const { seedWords } = this.props
 
-    exportAsFile('MetaMask Secret Backup Phrase', seedWords, 'text/plain')
+    exportAsFile('Venus Secret Backup Phrase', seedWords, 'text/plain')
   }
 
   renderSecretWordsContainer () {
@@ -111,7 +111,7 @@ class BackupPhraseScreen extends Component {
             Your secret backup phrase makes it easy to back up and restore your account.
           </div>
           <div className="backup-phrase__body-text">
-            WARNING: Never disclose your backup phrase. Anyone with this phrase can take your Ether forever.
+            WARNING: Never disclose your backup phrase. Anyone with this phrase can take your CMT forever.
           </div>
           {this.renderSecretWordsContainer()}
         </div>

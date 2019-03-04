@@ -46,7 +46,7 @@ InfoScreen.prototype.render = function () {
           // current version number
 
           h('.info.info-gray', [
-            h('div', 'Metamask for CMT'),
+            h('div', 'Venus'),
             h('div', {
               style: {
                 marginBottom: '10px',

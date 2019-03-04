@@ -1,5 +1,5 @@
-MetaMask for CMT is beta software.
+Venus is beta software.
 
-When you log in to MetaMask for CMT, your current account's address is visible to every new site you visit. This can be used to look up your account balances of CMT and other tokens.
+When you log in to Venus, your current account's address is visible to every new site you visit. This can be used to look up your account balances of CMT and other tokens.
 
 For your privacy, for now, please sign out of MetaMask when you're done using a site.

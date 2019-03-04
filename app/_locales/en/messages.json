@@ -87,11 +87,11 @@
     "message": "Amount + Gas"
   },
   "appDescription": {
-    "message": "CMT Browser Extension",
+    "message": "CyberMiles Browser Extension",
     "description": "The description of the application"
   },
   "appName": {
-    "message": "MetaMask for CMT",
+    "message": "Venus",
     "description": "The name of the application"
   },
   "approve": {
@@ -684,13 +684,13 @@
     "message": "Message"
   },
   "metamaskDescription": {
-    "message": "MetaMask is a secure identity vault for Ethereum."
+    "message": "Venus is a secure identity vault for CyberMiles."
   },
   "metamaskSeedWords": {
     "message": "MetaMask Seed Words"
   },
   "metamaskVersion": {
-    "message": "MetaMask for CMT Version"
+    "message": "Venus Version"
   },
   "min": {
     "message": "Minimum"
@@ -804,7 +804,7 @@
     "message": "You have returned to the old UI. You can switch back to the New UI through the option in the top right dropdown menu."
   },
   "onlySendToEtherAddress": {
-    "message": "Only send CMT to an Ethereum address."
+    "message": "Only send CMT to an CyberMiles address."
   },
   "onlySendTokensToAccountAddress": {
     "message": "Only send $1 to an CMT account address.",
@@ -1376,7 +1376,7 @@
     "message": "Welcome Back!"
   },
   "welcome": {
-    "message": "Welcome to MetaMask"
+    "message": "Welcome to Venus"
   },
   "whatsThis": {
     "message": "What's this?"

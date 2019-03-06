@@ -48,10 +48,10 @@ class Info extends Component {
         ]),
         h('div.settings__info-link-item', [
           h('a', {
-            href: 'http://remix.cybermiles.io/',
+            href: 'http://europa.cybermiles.io/',
             target: '_blank',
           }, [
-              h('span.settings__info-link', "Remix for CMT"),
+              h('span.settings__info-link', "Europa"),
             ]),
         ]),
         h('div.settings__info-link-item', [

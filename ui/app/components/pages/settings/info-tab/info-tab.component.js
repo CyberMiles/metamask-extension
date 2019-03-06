@@ -65,12 +65,12 @@ export default class InfoTab extends PureComponent {
         </div>
         <div className="info-tab__link-item">
           <a
-            href="http://remix.cybermiles.io/"
+            href="http://europa.cybermiles.io/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <span className="info-tab__link-text">
-              Remix for CMT
+              Europa
             </span>
           </a>
         </div>
